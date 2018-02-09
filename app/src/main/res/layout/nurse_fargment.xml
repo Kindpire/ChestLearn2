@@ -10,157 +10,107 @@
     <!-- TODO: Update blank fragment layout -->
 
 
-    <TextView
-        android:id="@+id/textView5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="7dp"
-        android:text="Other document"
-        app:layout_constraintTop_toBottomOf="@+id/nurse_imageTB"
-        tools:layout_editor_absoluteX="141dp" />
-
     <Button
         android:id="@+id/button_Nurse_submit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Submit"
-        tools:layout_conversion_absoluteHeight="48dp"
-        tools:layout_conversion_absoluteWidth="109dp"
-        tools:layout_conversion_absoluteX="216dp"
-        tools:layout_conversion_absoluteY="69dp"
-        android:layout_marginTop="0dp"
-        app:layout_constraintTop_toBottomOf="@+id/nurse_imageTB3"
-        android:layout_marginLeft="8dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_marginRight="8dp"
-        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginBottom="4dp"
+        android:layout_marginRight="80dp"
+        android:layout_marginStart="24dp"
+        android:text="No"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginBottom="8dp" />
-
-    <Button
-        android:id="@+id/buttonTBPhoto3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginLeft="49dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginTop="8dp"
-        android:text="Take/Retake Photo"
-        app:layout_constraintBottom_toBottomOf="@+id/nurse_imageTB3"
-        app:layout_constraintHorizontal_bias="0.153"
-        app:layout_constraintLeft_toRightOf="@+id/nurse_imageTB3"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/nurse_imageTB3"
+        app:layout_constraintStart_toEndOf="@+id/button"
         tools:layout_conversion_absoluteHeight="48dp"
         tools:layout_conversion_absoluteWidth="109dp"
         tools:layout_conversion_absoluteX="216dp"
         tools:layout_conversion_absoluteY="69dp" />
-
-    <Button
-        android:id="@+id/buttonTBPhoto2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginLeft="50dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginTop="8dp"
-        android:text="Take/Retake Photo"
-        app:layout_constraintBottom_toBottomOf="@+id/nurse_imageTB2"
-        app:layout_constraintHorizontal_bias="0.137"
-        app:layout_constraintLeft_toRightOf="@+id/nurse_imageTB2"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/nurse_imageTB2"
-        tools:layout_conversion_absoluteHeight="48dp"
-        tools:layout_conversion_absoluteWidth="109dp"
-        tools:layout_conversion_absoluteX="216dp"
-        tools:layout_conversion_absoluteY="69dp" />
-
-    <ImageView
-        android:id="@+id/nurse_imageTB3"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:cropToPadding="true"
-        android:padding="1dp"
-        android:scaleType="centerCrop"
-        app:srcCompat="@drawable/image_border"
-        android:layout_marginLeft="0dp"
-        app:layout_constraintLeft_toLeftOf="@+id/nurse_imageTB2"
-        android:layout_marginTop="30dp"
-        app:layout_constraintTop_toBottomOf="@+id/nurse_imageTB2"
-        android:layout_marginRight="8dp"
-        app:layout_constraintRight_toRightOf="@+id/nurse_imageTB2"
-        app:layout_constraintHorizontal_bias="0.0" />
-
-    <ImageView
-        android:id="@+id/nurse_imageTB2"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:cropToPadding="true"
-        android:padding="1dp"
-        android:scaleType="centerCrop"
-        app:srcCompat="@drawable/image_border"
-        android:layout_marginTop="32dp"
-        app:layout_constraintTop_toBottomOf="@+id/nurse_imageTB"
-        android:layout_marginLeft="0dp"
-        app:layout_constraintLeft_toLeftOf="@+id/nurse_imageTB"
-        android:layout_marginRight="8dp"
-        app:layout_constraintRight_toRightOf="@+id/nurse_imageTB"
-        app:layout_constraintHorizontal_bias="0.0" />
 
     <ImageView
         android:id="@+id/nurse_imageTB"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:padding="1dp"
+        android:layout_width="230dp"
+        android:layout_height="314dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginLeft="92dp"
+        android:layout_marginTop="20dp"
         android:cropToPadding="true"
+        android:padding="1dp"
         android:scaleType="centerCrop"
-        app:srcCompat="@drawable/image_border"
-        android:layout_marginLeft="65dp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_marginTop="8dp"
-        app:layout_constraintTop_toBottomOf="@+id/textView2" />
+        app:layout_constraintTop_toBottomOf="@+id/textView2"
+        app:srcCompat="@drawable/image_border" />
 
     <Button
         android:id="@+id/buttonTBPhoto"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Take/Retake Photo"
-        tools:layout_conversion_absoluteX="216dp"
-        tools:layout_conversion_absoluteY="69dp"
-        tools:layout_conversion_absoluteWidth="109dp"
-        tools:layout_conversion_absoluteHeight="48dp"
-        app:layout_constraintLeft_toRightOf="@+id/nurse_imageTB"
-        android:layout_marginLeft="57dp"
-        android:layout_marginRight="8dp"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintTop_toTopOf="@+id/nurse_imageTB"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        app:layout_constraintBottom_toBottomOf="@+id/nurse_imageTB"
-        android:layout_marginBottom="8dp" />
+        android:text="Take/Retake Photo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.502"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/nurse_imageTB"
+        tools:layout_conversion_absoluteHeight="48dp"
+        tools:layout_conversion_absoluteWidth="109dp"
+        tools:layout_conversion_absoluteX="216dp"
+        tools:layout_conversion_absoluteY="69dp" />
 
     <EditText
         android:id="@+id/patientLastName"
-        android:layout_width="316dp"
-        android:layout_height="43dp"
+        android:layout_width="208dp"
+        android:layout_height="46dp"
+        android:layout_marginEnd="8dp"
         android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="16dp"
         android:ems="10"
         android:hint="Patient Last Name"
         android:inputType="textPersonName"
+        android:imeOptions="actionDone"
+        app:layout_constraintEnd_toStartOf="@+id/button_edit"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
         android:text="X-Ray Photo uses to analyze"
-        tools:layout_editor_absoluteX="121dp"
+        app:layout_constraintTop_toBottomOf="@+id/patientLastName"
+        tools:layout_editor_absoluteX="104dp" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="12dp"
         android:layout_marginTop="8dp"
-        app:layout_constraintTop_toBottomOf="@+id/patientLastName" />
+        android:text="Do you have additional info to upload?"
+        app:layout_constraintBottom_toTopOf="@+id/button_Nurse_submit"
+        app:layout_constraintTop_toBottomOf="@+id/buttonTBPhoto"
+        tools:layout_editor_absoluteX="74dp" />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="72dp"
+        android:layout_marginTop="8dp"
+        android:text="Yes"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView3" />
+
+    <Button
+        android:id="@+id/button_edit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="32dp"
+        android:text="Edit"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:layout_editor_absoluteY="17dp" />
 
 
 </android.support.constraint.ConstraintLayout>

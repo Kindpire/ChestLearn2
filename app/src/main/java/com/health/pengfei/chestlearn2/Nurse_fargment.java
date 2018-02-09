@@ -5,16 +5,22 @@ import android.app.DialogFragment;
 import android.app.FragmentManager;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 //v4 and app's Fragment are different, v4 support 1.6 minimum, app for 3.0
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -24,6 +30,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import android.provider.Settings.Secure;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
@@ -59,10 +66,10 @@ public class Nurse_fargment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-    private ImageView main_XRay_Image, second_XRay_Image,third_XRay_Image;
-    private String main_XRay_Image_uri,second_XRay_Image_uri,third_XRay_Image_uri;
+    private ImageView main_XRay_Image;
+    private String main_XRay_Image_uri;
     boolean checkallthree;
-    private Button main_XRay_button,second_XRay_button,third_XRay_button, submitButton;
+    private Button main_XRay_button, submitButton,edit_Button;
     private EditText patientLastName;
     private EditText patient_LastName_textEdit;
 
@@ -108,20 +115,21 @@ public class Nurse_fargment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+
+
         // Inflate the layout for this fragment
         View nurseFragmentView = inflater.inflate(R.layout.nurse_fargment, container, false);
         patientLastName=(EditText)nurseFragmentView.findViewById(R.id.patientLastName);
         main_XRay_Image=(ImageView) nurseFragmentView.findViewById(R.id.nurse_imageTB);
-        second_XRay_Image=(ImageView) nurseFragmentView.findViewById(R.id.nurse_imageTB2);
-        third_XRay_Image=(ImageView) nurseFragmentView.findViewById(R.id.nurse_imageTB3);
+
         sp= getActivity().getSharedPreferences("doctor.conf", Context.MODE_PRIVATE);
         progressDialog = new ProgressDialog(nurseFragmentView.getContext());
 
         main_XRay_button=(Button) nurseFragmentView.findViewById(R.id.buttonTBPhoto);
-        second_XRay_button=(Button)nurseFragmentView.findViewById(R.id.buttonTBPhoto2);
-        third_XRay_button=(Button) nurseFragmentView.findViewById(R.id.buttonTBPhoto3);
         submitButton =(Button) nurseFragmentView.findViewById(R.id.button_Nurse_submit);
 
+        edit_Button=(Button)nurseFragmentView.findViewById(R.id.button_edit);
 
 
         main_XRay_button.setOnClickListener(new View.OnClickListener() {
@@ -132,26 +140,48 @@ public class Nurse_fargment extends Fragment {
                 startActivityForResult(i,1);
             }
         });
-        second_XRay_button.setOnClickListener(new View.OnClickListener() {
+        edit_Button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(getActivity(),TakePhoto.class);
-
-                startActivityForResult(i,2);
+                patientLastName.setEnabled(true);
             }
         });
-        third_XRay_button.setOnClickListener(new View.OnClickListener() {
+
+        patientLastName.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
-            public void onClick(View view) {
-                Intent i = new Intent(getActivity(),TakePhoto.class);
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if ( (actionId == EditorInfo.IME_ACTION_DONE) || ((event.getKeyCode() == KeyEvent.KEYCODE_ENTER) && (event.getAction() == KeyEvent.ACTION_DOWN ))){
+                    AlertDialog.Builder builder=new AlertDialog.Builder(getContext());
 
-                startActivityForResult(i,3);
+                    builder.setTitle("Are you sure")
+                            .setMessage("Is patient last name correct?")
+                            .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+
+                                    patientLastName.setEnabled(false);
+                                }
+                            })
+                            .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    patientLastName.setEnabled(true );
+                                    patientLastName.requestFocus();
+                                    InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                                    imm.showSoftInput(patientLastName, InputMethodManager.SHOW_IMPLICIT);
+                                }
+                            })
+                            .show();
+                    return true;
+                }
+                else{
+                    return false;
+                }
             }
         });
+
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(main_XRay_Image_uri==null || second_XRay_Image_uri==null || third_XRay_Image_uri==null){
+                if(main_XRay_Image_uri==null){
                     //TODO open a dialog box to "yes" continue to send or "no" to cancel the submit request.
                     NoticeDialogFragment dialog = new NoticeDialogFragment();
                     dialog.setTargetFragment(Nurse_fargment.this,REQUEST_EVALUATE); // 0X110
@@ -189,20 +219,7 @@ public class Nurse_fargment extends Fragment {
             builder.addFormDataPart("uploadedfile[]", file.getName(), uploadedfile);
 
         }
-        if (second_XRay_Image_uri != null) {
-            Uri imageUri = Uri.parse(second_XRay_Image_uri);
-            File file = new File(imageUri.getPath());
-            RequestBody uploadedfile = RequestBody.create(MediaType.parse("multipart/form-data"), file);
-            builder.addFormDataPart("uploadedfile[]", file.getName(), uploadedfile);
 
-        }
-        if (third_XRay_Image_uri != null) {
-            Uri imageUri = Uri.parse(third_XRay_Image_uri);
-            File file = new File(imageUri.getPath());
-            RequestBody uploadedfile = RequestBody.create(MediaType.parse("multipart/form-data"), file);
-            builder.addFormDataPart("uploadedfile[]", file.getName(), uploadedfile);
-
-        }
 
         if (mainTppFileName == null) {
             Toast.makeText(getActivity().getApplicationContext(), "Main X ray must be at first place", Toast.LENGTH_SHORT).show();
@@ -237,8 +254,7 @@ public class Nurse_fargment extends Fragment {
                         Toast.makeText(getActivity().getApplicationContext(), serverResponse.getMessage(), Toast.LENGTH_SHORT).show();
 
                         main_XRay_Image.setImageResource(R.drawable.image_border);
-                        second_XRay_Image.setImageResource(R.drawable.image_border);
-                        third_XRay_Image.setImageResource(R.drawable.image_border);
+
                         patientLastName.setText("");
                     }
 
@@ -310,27 +326,8 @@ public class Nurse_fargment extends Fragment {
                     Glide.with(this).load(new File(imageUri.getPath())).into(main_XRay_Image);
 
                 }
-            } else if (requestCode == 2) {
-                System.out.println("From second" + data.getStringExtra("uri"));
-                String mCurrentPhotoPath=data.getStringExtra("uri");
-                if(mCurrentPhotoPath!=null) {
-                    second_XRay_Image_uri = mCurrentPhotoPath;
-                    Uri imageUri = Uri.parse(mCurrentPhotoPath);
-                    File file = new File(imageUri.getPath());
-                    Glide.with(this).load(new File(imageUri.getPath())).into(second_XRay_Image);
-
-                }
-            } else if (requestCode == 3) {
-                System.out.println("From third" + data.getStringExtra("uri"));
-                String mCurrentPhotoPath=data.getStringExtra("uri");
-                if(mCurrentPhotoPath!=null) {
-                    Uri imageUri = Uri.parse(mCurrentPhotoPath);
-                    third_XRay_Image_uri = mCurrentPhotoPath;
-                    File file = new File(imageUri.getPath());
-                    Glide.with(this).load(new File(imageUri.getPath())).into(third_XRay_Image);
-
-                }
             }
+
         }
     }
     public RequestBody toRequestBody(String value) {
