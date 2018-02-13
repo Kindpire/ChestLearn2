@@ -1,18 +1,17 @@
 package com.health.pengfei.chestlearn2;
 
 import android.app.Activity;
-import android.app.DialogFragment;
-import android.app.FragmentManager;
+//import android.app.Fragment;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 //v4 and app's Fragment are different, v4 support 1.6 minimum, app for 3.0
 import android.support.v4.app.Fragment;
+
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -48,12 +47,12 @@ import static android.app.Activity.RESULT_CANCELED;
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link Nurse_fargment.OnFragmentInteractionListener} interface
+ * {@link NurseFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link Nurse_fargment#newInstance} factory method to
+ * Use the {@link NurseFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class Nurse_fargment extends Fragment {
+public class NurseFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -69,7 +68,7 @@ public class Nurse_fargment extends Fragment {
     private ImageView main_XRay_Image;
     private String main_XRay_Image_uri;
     boolean checkallthree;
-    private Button main_XRay_button, submitButton,edit_Button;
+    private Button main_XRay_button, submitButton, edit_Button, additional_Button;
     private EditText patientLastName;
     private EditText patient_LastName_textEdit;
 
@@ -79,7 +78,7 @@ public class Nurse_fargment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
-    public Nurse_fargment() {
+    public NurseFragment() {
         // Required empty public constructor
     }
 
@@ -92,8 +91,8 @@ public class Nurse_fargment extends Fragment {
      * @return A new instance of fragment nurse_fargment.
      */
     // TODO: Rename and change types and number of parameters
-    public static Nurse_fargment newInstance(String param1, String param2) {
-        Nurse_fargment fragment = new Nurse_fargment();
+    public static NurseFragment newInstance(String param1, String param2) {
+        NurseFragment fragment = new NurseFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -128,7 +127,7 @@ public class Nurse_fargment extends Fragment {
 
         main_XRay_button=(Button) nurseFragmentView.findViewById(R.id.buttonTBPhoto);
         submitButton =(Button) nurseFragmentView.findViewById(R.id.button_Nurse_submit);
-
+        additional_Button =(Button) nurseFragmentView.findViewById(R.id.button_additional_info);
         edit_Button=(Button)nurseFragmentView.findViewById(R.id.button_edit);
 
 
@@ -177,14 +176,60 @@ public class Nurse_fargment extends Fragment {
                 }
             }
         });
+        additional_Button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
 
+                String  clinicName= sp.getString("clinicName","");
+                String  nurseName=  sp.getString("nurseName","");
+                final String  recipients=sp.getString("recipients","");
+                String  doc1=sp.getString("doc1","");
+                String  doc2=sp.getString("doc2","");
+                String  doc3=sp.getString("doc3","");
+                String patientLName=patientLastName.getText().toString();
+                String uploadDeviceID = Secure.getString(getContext().getContentResolver(),Secure.ANDROID_ID);
+
+                String mainTppFileName = null;
+                checkallthree = false;
+
+                if (mainTppFileName == null) {
+                    Toast.makeText(getActivity().getApplicationContext(), "Main X ray must be at first place", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                progressDialog.setMessage("Uploading");
+                progressDialog.show();
+
+                HashMap<String, RequestBody> map = new HashMap<String, RequestBody>();
+                map.put("id", toRequestBody("1"));
+                map.put("patientLastName", toRequestBody(patientLName));
+                map.put("uploadDeviceID", toRequestBody(uploadDeviceID));
+                map.put("uploadPersonType", toRequestBody("n"));
+                map.put("uploadNurseName", toRequestBody(nurseName));
+                map.put("clinicName", toRequestBody(clinicName));
+                // map.put("recipientName",toRequestBody(recipients));
+                map.put("doc1", toRequestBody(doc1));
+                map.put("doc2", toRequestBody(doc2));
+                map.put("doc3", toRequestBody(doc3));
+                map.put("mainTppFileName", toRequestBody(mainTppFileName));
+
+                Bundle extras = new Bundle();
+                extras.putSerializable("HashMap",map);
+
+                Nurse2Fragment nurse_fragment2 =new Nurse2Fragment();
+                nurse_fragment2.setArguments(extras);
+                android.support.v4.app.FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                android.support.v4.app.FragmentTransaction fragmentTransaction=fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.fragment_container, nurse_fragment2);
+                fragmentTransaction.commit();
+            }
+        });
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(main_XRay_Image_uri==null){
                     //TODO open a dialog box to "yes" continue to send or "no" to cancel the submit request.
                     NoticeDialogFragment dialog = new NoticeDialogFragment();
-                    dialog.setTargetFragment(Nurse_fargment.this,REQUEST_EVALUATE); // 0X110
+                    dialog.setTargetFragment(NurseFragment.this,REQUEST_EVALUATE); // 0X110
                     dialog.show(getFragmentManager(), EVALUATE_DIALOG); //"evaluate_dialog";
                 } else {
                     uploadPics();

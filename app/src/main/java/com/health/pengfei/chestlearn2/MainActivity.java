@@ -1,12 +1,10 @@
 package com.health.pengfei.chestlearn2;
 
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -17,10 +15,9 @@ import android.util.Log;
 import android.view.Menu;
 
 import android.view.MenuItem;
-import android.view.inputmethod.InputMethodManager;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener,Nurse_fargment.OnFragmentInteractionListener, Radiologist_fragment.OnFragmentInteractionListener {
+        implements NavigationView.OnNavigationItemSelectedListener,NurseFragment.OnFragmentInteractionListener, Radiologist_fragment.OnFragmentInteractionListener, Nurse2Fragment.OnFragmentInteractionListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,9 +34,9 @@ public class MainActivity extends AppCompatActivity
                     public void onClick(DialogInterface dialog, int which) {
                     }
                 }).show();
-        Nurse_fargment nurse_fargment=new Nurse_fargment();
+        NurseFragment nurse_fragment =new NurseFragment();
         android.support.v4.app.FragmentTransaction fragmentTransaction=getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.fragment_container,nurse_fargment);
+        fragmentTransaction.replace(R.id.fragment_container, nurse_fragment);
         fragmentTransaction.commit();
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -96,9 +93,9 @@ public class MainActivity extends AppCompatActivity
 
         if (id == R.id.nav_nurse)  {
             Log.d("menu","====== nurse");
-            Nurse_fargment nurse_fargment=new Nurse_fargment();
+            NurseFragment nurse_fragment =new NurseFragment();
             android.support.v4.app.FragmentTransaction fragmentTransaction=getSupportFragmentManager().beginTransaction();
-            fragmentTransaction.replace(R.id.fragment_container,nurse_fargment);
+            fragmentTransaction.replace(R.id.fragment_container, nurse_fragment);
             fragmentTransaction.commit();
         } else if (id == R.id.nav_radio) {
             Log.d("menu","====== radio");

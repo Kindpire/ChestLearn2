@@ -14,7 +14,16 @@
 
     <string name="title_activity_loading_page">LoadingPage</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
-
+    <string name="takephoto">Take Photo</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="submit">Submit</string>
+    <string name="edit">Edit</string>
+    <string name="patientlastname">Enter Patient Last Name</string>
+    <string name="intro_xrayimg">Take Chest X-Ray Photo</string>
+    <string name="intro_physicalexam">Physical exam results</string>
+    <string name="intro_labresult">Lab results</string>
+    <string name="intro_require_additional">Do you have additional info to upload?</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 

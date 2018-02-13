@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.health.pengfei.chestlearn2.Nurse_fargment"
+    tools:context="com.health.pengfei.chestlearn2.NurseFragment"
     android:weightSum="1">
 
 
@@ -14,13 +14,12 @@
         android:id="@+id/button_Nurse_submit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="4dp"
-        android:layout_marginRight="80dp"
-        android:layout_marginStart="24dp"
-        android:text="No"
+        android:layout_marginRight="36dp"
+        android:layout_marginStart="8dp"
+        android:text="@string/no"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/button"
+        app:layout_constraintStart_toEndOf="@+id/button_additional_info"
         tools:layout_conversion_absoluteHeight="48dp"
         tools:layout_conversion_absoluteWidth="109dp"
         tools:layout_conversion_absoluteX="216dp"
@@ -30,9 +29,8 @@
         android:id="@+id/nurse_imageTB"
         android:layout_width="230dp"
         android:layout_height="314dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginEnd="4dp"
         android:layout_marginLeft="92dp"
-        android:layout_marginTop="20dp"
         android:cropToPadding="true"
         android:padding="1dp"
         android:scaleType="centerCrop"
@@ -48,7 +46,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:text="Take/Retake Photo"
+        android:text="@string/takephoto"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="parent"
@@ -62,13 +60,12 @@
         android:id="@+id/patientLastName"
         android:layout_width="208dp"
         android:layout_height="46dp"
-        android:layout_marginEnd="8dp"
         android:layout_marginLeft="8dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="4dp"
         android:ems="10"
-        android:hint="Patient Last Name"
-        android:inputType="textPersonName"
+        android:hint="@string/patientlastname"
         android:imeOptions="actionDone"
+        android:inputType="textPersonName"
         app:layout_constraintEnd_toStartOf="@+id/button_edit"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -77,29 +74,34 @@
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="12dp"
-        android:text="X-Ray Photo uses to analyze"
-        app:layout_constraintTop_toBottomOf="@+id/patientLastName"
-        tools:layout_editor_absoluteX="104dp" />
+        android:text="@string/intro_xrayimg"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/patientLastName" />
 
     <TextView
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="12dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:text="Do you have additional info to upload?"
+        android:text="@string/intro_require_additional"
         app:layout_constraintBottom_toTopOf="@+id/button_Nurse_submit"
-        app:layout_constraintTop_toBottomOf="@+id/buttonTBPhoto"
-        tools:layout_editor_absoluteX="74dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonTBPhoto" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/button_additional_info"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="72dp"
-        android:layout_marginTop="8dp"
-        android:text="Yes"
+        android:layout_marginStart="52dp"
+        android:text="@string/yes"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
@@ -107,10 +109,10 @@
         android:id="@+id/button_edit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="32dp"
-        android:text="Edit"
+        android:layout_marginEnd="16dp"
+        android:text="@string/edit"
         app:layout_constraintEnd_toEndOf="parent"
-        tools:layout_editor_absoluteY="17dp" />
+        tools:layout_editor_absoluteY="0dp" />
 
 
 </android.support.constraint.ConstraintLayout>
