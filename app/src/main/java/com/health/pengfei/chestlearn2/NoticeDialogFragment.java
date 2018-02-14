@@ -47,7 +47,7 @@ public class NoticeDialogFragment extends DialogFragment
         } else if (which == -2){
             intent.putExtra(RESPONSE_EVALUATE, "CANCEL");
         }
-        getTargetFragment().onActivityResult(Nurse_fargment.REQUEST_EVALUATE,
+        getTargetFragment().onActivityResult(NurseFragment.REQUEST_EVALUATE,
                 Activity.RESULT_OK, intent);
 
     }

@@ -28,7 +28,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="0dp"
         android:layout_marginLeft="62dp"
-        android:text="Take/Retake"
+        android:text="@string/takephoto"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent" />
 
