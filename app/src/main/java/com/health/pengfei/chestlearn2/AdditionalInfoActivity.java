@@ -127,6 +127,7 @@ public class AdditionalInfoActivity extends AppCompatActivity {
                     AlertDialog.Builder builder=new AlertDialog.Builder(AdditionalInfoActivity.this);
                     builder.setTitle("Physical exam and lab result are empty")
                             .setMessage("Upload X-ray image?")
+                            .setCancelable(false)
                             .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int which) {
                                     uploadPics();
@@ -143,6 +144,7 @@ public class AdditionalInfoActivity extends AppCompatActivity {
                     //open a dialog box to "yes" continue to send or "no" to cancel the submit request.
                     AlertDialog.Builder builder=new AlertDialog.Builder(AdditionalInfoActivity.this);
                     builder.setTitle("Physical exam result is empty")
+                            .setCancelable(false)
                             .setMessage("Upload lab result and X-ray image?")
                             .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int which) {
@@ -162,6 +164,7 @@ public class AdditionalInfoActivity extends AppCompatActivity {
 
                     builder.setTitle("Lab result is empty")
                             .setMessage("Upload exam result and X-ray image?")
+                            .setCancelable(false)
                             .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int which) {
                                     uploadPics();
@@ -178,6 +181,7 @@ public class AdditionalInfoActivity extends AppCompatActivity {
                     AlertDialog.Builder builder=new AlertDialog.Builder(AdditionalInfoActivity.this);
                     builder.setTitle("Confirmation")
                             .setMessage("Upload the additional info with X-ray image?")
+                            .setCancelable(false)
                             .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int which) {
                                     uploadPics();
@@ -284,6 +288,7 @@ public class AdditionalInfoActivity extends AppCompatActivity {
                 AlertDialog.Builder builder=new AlertDialog.Builder(AdditionalInfoActivity.this);
                 builder.setTitle("Result")
                         .setMessage("Success Upload.")
+                        .setCancelable(false)
                         .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
                                 Intent resultIntent = new Intent();

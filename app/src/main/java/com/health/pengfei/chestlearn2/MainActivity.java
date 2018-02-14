@@ -30,6 +30,7 @@ public class MainActivity extends AppCompatActivity
 
         builder.setTitle("Welcome")
                 .setMessage("Welcome to TB APP")
+                .setCancelable(false)
                 .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                     }

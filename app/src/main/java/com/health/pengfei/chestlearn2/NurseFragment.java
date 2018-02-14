@@ -154,6 +154,7 @@ public class NurseFragment extends Fragment {
 
                     builder.setTitle("Are you sure")
                             .setMessage("Is patient last name correct?")
+                            .setCancelable(false)
                             .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int which) {
 
@@ -208,6 +209,7 @@ public class NurseFragment extends Fragment {
                     AlertDialog.Builder alertbuilder=new AlertDialog.Builder(getActivity());
                     alertbuilder.setTitle("No X-Ray Image")
                             .setMessage("Please take X-Ray Image first.")
+                            .setCancelable(false)
                             .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int which) {
                                 }
@@ -224,6 +226,7 @@ public class NurseFragment extends Fragment {
                     AlertDialog.Builder alertbuilder=new AlertDialog.Builder(getActivity());
                     alertbuilder.setTitle("No Patient Last Name.")
                             .setMessage("Please input patient last name.")
+                            .setCancelable(false)
                             .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int which) {
                                 }
@@ -289,6 +292,7 @@ public class NurseFragment extends Fragment {
             AlertDialog.Builder alertbuilder=new AlertDialog.Builder(getActivity());
             alertbuilder.setTitle("No X-Ray Image")
                     .setMessage("Please take X-Ray Image first.")
+                    .setCancelable(false)
                     .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
                         }
@@ -302,6 +306,7 @@ public class NurseFragment extends Fragment {
             AlertDialog.Builder alertbuilder=new AlertDialog.Builder(getActivity());
             alertbuilder.setTitle("No Patient Last Name.")
                     .setMessage("Please input patient last name.")
+                    .setCancelable(false)
                     .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
                         }

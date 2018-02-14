@@ -21,6 +21,7 @@ public class NoticeDialogFragment extends DialogFragment
     {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setMessage("Not 3 photos, still want to upload?")
+                .setCancelable(false)
                 .setPositiveButton("YES", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         setResult(id);
