@@ -17,7 +17,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener,NurseFragment.OnFragmentInteractionListener, Radiologist_fragment.OnFragmentInteractionListener, Nurse2Fragment.OnFragmentInteractionListener {
+        implements NavigationView.OnNavigationItemSelectedListener,NurseFragment.OnFragmentInteractionListener, Radiologist_fragment.OnFragmentInteractionListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

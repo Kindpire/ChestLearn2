@@ -1,13 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.health.pengfei.chestlearn2.Nurse2Fragment">
-
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.health.pengfei.chestlearn2.AdditionalInfoActivity"
+    tools:showIn="@layout/activity_additional_info">
     <!-- TODO: Update blank fragment layout -->
     <TextView
-        android:id="@+id/textView5"
+        android:id="@+id/tv_lab_result"
         android:layout_width="wrap_content"
         android:layout_height="15dp"
         android:layout_marginEnd="8dp"
@@ -82,7 +84,7 @@
         android:scaleType="centerCrop"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView5"
+        app:layout_constraintTop_toBottomOf="@+id/tv_lab_result"
         app:srcCompat="@drawable/image_border" />
 
     <ImageView
@@ -97,11 +99,11 @@
         android:scaleType="centerCrop"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView2"
+        app:layout_constraintTop_toBottomOf="@+id/tv_exam_result"
         app:srcCompat="@drawable/image_border" />
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/tv_exam_result"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
@@ -110,10 +112,10 @@
         android:text="@string/intro_physicalexam"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView4" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_patientlastname" />
 
     <TextView
-        android:id="@+id/textView4"
+        android:id="@+id/tv_patientlastname"
         android:layout_width="283dp"
         android:layout_height="36dp"
         android:layout_marginEnd="8dp"
@@ -124,5 +126,4 @@
         app:layout_constraintHorizontal_bias="0.508"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
 </android.support.constraint.ConstraintLayout>

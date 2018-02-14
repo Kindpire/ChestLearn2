@@ -192,13 +192,45 @@ public class NurseFragment extends Fragment {
                 String mainTppFileName = null;
                 checkallthree = false;
 
+                MultipartBody.Builder builder = new MultipartBody.Builder()
+                        .setType(MultipartBody.FORM);
+
+                System.out.println("Ready to upload");
+                if (main_XRay_Image_uri != null) {
+                    Uri imageUri = Uri.parse(main_XRay_Image_uri);
+                    File file = new File(imageUri.getPath());
+                    mainTppFileName = file.getName();
+                }
+
                 if (mainTppFileName == null) {
-                    Toast.makeText(getActivity().getApplicationContext(), "Main X ray must be at first place", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(getActivity().getApplicationContext(), "Main X ray must be at first place", Toast.LENGTH_SHORT).show();
+                    //TODO open a dialog box to "yes" continue to send or "no" to cancel the submit request.
+                    AlertDialog.Builder alertbuilder=new AlertDialog.Builder(getActivity());
+                    alertbuilder.setTitle("No X-Ray Image")
+                            .setMessage("Please take X-Ray Image first.")
+                            .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                }
+                            })
+                            .show();
                     return;
                 }
-                progressDialog.setMessage("Uploading");
-                progressDialog.show();
-
+                Log.v("Patient", patientLName);
+                System.out.println("PNAME");
+                System.out.println(patientLName);
+                if (patientLName.length()==0) {
+//                    Toast.makeText(getActivity().getApplicationContext(), "Main X ray must be at first place", Toast.LENGTH_SHORT).show();
+                    //TODO open a dialog box to "yes" continue to send or "no" to cancel the submit request.
+                    AlertDialog.Builder alertbuilder=new AlertDialog.Builder(getActivity());
+                    alertbuilder.setTitle("No Patient Last Name.")
+                            .setMessage("Please input patient last name.")
+                            .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                }
+                            })
+                            .show();
+                    return;
+                }
                 HashMap<String, RequestBody> map = new HashMap<String, RequestBody>();
                 map.put("id", toRequestBody("1"));
                 map.put("patientLastName", toRequestBody(patientLName));
@@ -212,28 +244,16 @@ public class NurseFragment extends Fragment {
                 map.put("doc3", toRequestBody(doc3));
                 map.put("mainTppFileName", toRequestBody(mainTppFileName));
 
-                Bundle extras = new Bundle();
-                extras.putSerializable("HashMap",map);
-
-                Nurse2Fragment nurse_fragment2 =new Nurse2Fragment();
-                nurse_fragment2.setArguments(extras);
-                android.support.v4.app.FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                android.support.v4.app.FragmentTransaction fragmentTransaction=fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.fragment_container, nurse_fragment2);
-                fragmentTransaction.commit();
+                Intent i = new Intent(getActivity(),AdditionalInfoActivity.class);
+                i.putExtra("patientlastname", patientLName);
+                i.putExtra("x_img_uri", main_XRay_Image_uri);
+                startActivityForResult(i,9);
             }
         });
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(main_XRay_Image_uri==null){
-                    //TODO open a dialog box to "yes" continue to send or "no" to cancel the submit request.
-                    NoticeDialogFragment dialog = new NoticeDialogFragment();
-                    dialog.setTargetFragment(NurseFragment.this,REQUEST_EVALUATE); // 0X110
-                    dialog.show(getFragmentManager(), EVALUATE_DIALOG); //"evaluate_dialog";
-                } else {
-                    uploadPics();
-                }
+                uploadPics();
             }
         });
         return nurseFragmentView;
@@ -262,14 +282,34 @@ public class NurseFragment extends Fragment {
             mainTppFileName = file.getName();
             RequestBody uploadedfile = RequestBody.create(MediaType.parse("multipart/form-data"), file);
             builder.addFormDataPart("uploadedfile[]", file.getName(), uploadedfile);
-
         }
-
 
         if (mainTppFileName == null) {
-            Toast.makeText(getActivity().getApplicationContext(), "Main X ray must be at first place", Toast.LENGTH_SHORT).show();
+            //TODO open a dialog box to "yes" continue to send or "no" to cancel the submit request.
+            AlertDialog.Builder alertbuilder=new AlertDialog.Builder(getActivity());
+            alertbuilder.setTitle("No X-Ray Image")
+                    .setMessage("Please take X-Ray Image first.")
+                    .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                        }
+                    })
+                    .show();
             return;
         }
+        if (patientLName.length()==0) {
+//                    Toast.makeText(getActivity().getApplicationContext(), "Main X ray must be at first place", Toast.LENGTH_SHORT).show();
+            //TODO open a dialog box to "yes" continue to send or "no" to cancel the submit request.
+            AlertDialog.Builder alertbuilder=new AlertDialog.Builder(getActivity());
+            alertbuilder.setTitle("No Patient Last Name.")
+                    .setMessage("Please input patient last name.")
+                    .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                        }
+                    })
+                    .show();
+            return;
+        }
+
         progressDialog.setMessage("Uploading");
         progressDialog.show();
 
@@ -299,13 +339,14 @@ public class NurseFragment extends Fragment {
                         Toast.makeText(getActivity().getApplicationContext(), serverResponse.getMessage(), Toast.LENGTH_SHORT).show();
 
                         main_XRay_Image.setImageResource(R.drawable.image_border);
-
+                        main_XRay_Image_uri=null;
                         patientLastName.setText("");
+                        patientLastName.setEnabled(true);
                     }
 
                 } else {
                     assert serverResponse != null;
-                    Log.v("Response", serverResponse.toString());
+                    Log.e("Response", serverResponse.toString());
                 }
                 progressDialog.dismiss();
 
@@ -371,6 +412,14 @@ public class NurseFragment extends Fragment {
                     Glide.with(this).load(new File(imageUri.getPath())).into(main_XRay_Image);
 
                 }
+            }
+            if (requestCode == 9) {
+                // make use of "data" = profit
+                System.out.println("From SUB!!!!!!!!!!!!!!");
+                main_XRay_Image.setImageResource(R.drawable.image_border);
+                main_XRay_Image_uri=null;
+                patientLastName.setText("");
+                patientLastName.setEnabled(true);
             }
 
         }
