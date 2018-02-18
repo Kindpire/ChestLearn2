@@ -277,7 +277,22 @@ public class AdditionalInfoActivity extends AppCompatActivity {
                     } else {
                         Toast.makeText(AdditionalInfoActivity.this.getApplicationContext(), serverResponse.getMessage(), Toast.LENGTH_SHORT).show();
                         second_XRay_Image.setImageResource(R.drawable.image_border);
+                        second_XRay_Image_uri = null;
                         third_XRay_Image.setImageResource(R.drawable.image_border);
+                        third_XRay_Image_uri = null;
+                        AlertDialog.Builder builder=new AlertDialog.Builder(AdditionalInfoActivity.this);
+                        builder.setTitle("Result")
+                                .setMessage("Success Upload.")
+                                .setCancelable(false)
+                                .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        Intent resultIntent = new Intent();
+                                        resultIntent.putExtra("additionalinfo", "success");
+                                        setResult(9, resultIntent);
+                                        finish();
+                                    }
+                                })
+                                .show();
                     }
 
                 } else {
@@ -285,19 +300,6 @@ public class AdditionalInfoActivity extends AppCompatActivity {
                     Log.v("Response", serverResponse.toString());
                 }
                 progressDialog.dismiss();
-                AlertDialog.Builder builder=new AlertDialog.Builder(AdditionalInfoActivity.this);
-                builder.setTitle("Result")
-                        .setMessage("Success Upload.")
-                        .setCancelable(false)
-                        .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                Intent resultIntent = new Intent();
-                                resultIntent.putExtra("additionalinfo", "success");
-                                setResult(9, resultIntent);
-                                finish();
-                            }
-                        })
-                        .show();
             }
 
             @Override

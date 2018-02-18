@@ -256,7 +256,22 @@ public class NurseFragment extends Fragment {
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                uploadPics();
+                AlertDialog.Builder builder=new AlertDialog.Builder(getActivity());
+                builder.setTitle("X-ray image:")
+                        .setMessage("Do you want to upload X-ray image?")
+                        .setCancelable(false)
+                        .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                uploadPics();
+                            }
+                        })
+                        .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                return;
+                            }
+                        })
+                        .show();
             }
         });
         return nurseFragmentView;
@@ -341,8 +356,17 @@ public class NurseFragment extends Fragment {
                     if (serverResponse.getError()) {
                         Toast.makeText(getActivity().getApplicationContext(), serverResponse.getMessage(), Toast.LENGTH_SHORT).show();
                     } else {
-                        Toast.makeText(getActivity().getApplicationContext(), serverResponse.getMessage(), Toast.LENGTH_SHORT).show();
 
+//                        Toast.makeText(getActivity().getApplicationContext(), serverResponse.getMessage(), Toast.LENGTH_SHORT).show();
+                        AlertDialog.Builder builder=new AlertDialog.Builder(getActivity());
+                        builder.setTitle("Result")
+                                .setMessage("Success Upload.")
+                                .setCancelable(false)
+                                .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int which) {
+                                    }
+                                })
+                                .show();
                         main_XRay_Image.setImageResource(R.drawable.image_border);
                         main_XRay_Image_uri=null;
                         patientLastName.setText("");
