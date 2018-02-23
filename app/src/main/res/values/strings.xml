@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">eRx</string>
+    <string name="app_name">Peru TB project</string>
 
     <!-- Strings related to login -->
     <string name="prompt_UserName">UserName</string>
@@ -10,26 +10,27 @@
     <string name="error_invalid_password">This password is too short</string>
     <string name="error_incorrect_password">This password is incorrect</string>
     <string name="error_field_required">This field is required</string>
-    <string name="title_activity_main">eRx</string>
+    <string name="title_activity_main">Peru TB project</string>
 
     <string name="title_activity_loading_page">LoadingPage</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
-    <string name="takephoto">Take Photo</string>
-    <string name="yes">Yes</string>
+    <string name="takephoto">Tomar foto</string>
+    <string name="yes">Si</string>
     <string name="no">No</string>
-    <string name="submit">Submit</string>
-    <string name="edit">Edit</string>
-    <string name="patientlastname">Enter Patient Last Name</string>
-    <string name="intro_xrayimg">Take Chest X-Ray Photo</string>
-    <string name="intro_physicalexam">Physical exam results</string>
-    <string name="intro_labresult">Lab results</string>
-    <string name="intro_require_additional">Do you have additional info to upload?</string>
+    <string name="submit">Enviar</string>
+    <string name="edit">Editar</string>
+    <string name="patientlastname">Ingrese Apellido del Paciente</string>
+    <string name="intro_xrayimg">Tomar foto a la placa de Torax</string>
+    <string name="intro_physicalexam">PResultados examen medico</string>
+    <string name="intro_labresult">Resultados Laboratorio</string>
+    <string name="intro_require_additionaldd">Tienes información adicional para subir?</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
-    <string name="action_settings">Settings</string>
+    <string name="action_settings">Configuraciones</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="title_activity_additional_info">Additional Info</string>
+    <string name="title_activity_additional_info">" Información adicional"</string>
+    <string name="takkeRetakePhoto">Tomar foto/Volver  a tomar</string>
 </resources>

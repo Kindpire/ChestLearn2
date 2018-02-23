@@ -125,10 +125,10 @@ public class AdditionalInfoActivity extends AppCompatActivity {
                 if(second_XRay_Image_uri==null && third_XRay_Image_uri==null){
                     //open a dialog box to "yes" continue to send or "no" to cancel the submit request.
                     AlertDialog.Builder builder=new AlertDialog.Builder(AdditionalInfoActivity.this);
-                    builder.setTitle("Physical exam and lab result are empty")
-                            .setMessage("Upload X-ray image?")
+                    builder.setTitle("El examen físico y los resultados de laboratorio están vacíos")
+                            .setMessage("Subir imagen de rayos X?")
                             .setCancelable(false)
-                            .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                            .setPositiveButton("Si", new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int which) {
                                     uploadPics();
                                 }
@@ -145,8 +145,9 @@ public class AdditionalInfoActivity extends AppCompatActivity {
                     AlertDialog.Builder builder=new AlertDialog.Builder(AdditionalInfoActivity.this);
                     builder.setTitle("Physical exam result is empty")
                             .setCancelable(false)
-                            .setMessage("Upload lab result and X-ray image?")
-                            .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                            .setMessage(
+                                    "El resultado del examen físico está vacío")
+                            .setPositiveButton("Si", new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int which) {
                                     uploadPics();
                                 }
@@ -162,10 +163,11 @@ public class AdditionalInfoActivity extends AppCompatActivity {
                     //open a dialog box to "yes" continue to send or "no" to cancel the submit request.
                     AlertDialog.Builder builder=new AlertDialog.Builder(AdditionalInfoActivity.this);
 
-                    builder.setTitle("Lab result is empty")
-                            .setMessage("Upload exam result and X-ray image?")
+                    builder.setTitle(
+                            "El resultado del laboratorio está vacío")
+                            .setMessage("Sube el resultado del examen y la imagen de rayos X")
                             .setCancelable(false)
-                            .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                            .setPositiveButton("Si", new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int which) {
                                     uploadPics();
                                 }
@@ -180,9 +182,10 @@ public class AdditionalInfoActivity extends AppCompatActivity {
                 } else {
                     AlertDialog.Builder builder=new AlertDialog.Builder(AdditionalInfoActivity.this);
                     builder.setTitle("Confirmation")
-                            .setMessage("Upload the additional info with X-ray image?")
+                            .setMessage(
+                                    "Confirmación")
                             .setCancelable(false)
-                            .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                            .setPositiveButton("Si", new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int which) {
                                     uploadPics();
                                 }
@@ -249,7 +252,7 @@ public class AdditionalInfoActivity extends AppCompatActivity {
 //            Toast.makeText(this.getApplicationContext(), "Main X ray must be at first place", Toast.LENGTH_SHORT).show();
 //            return;
 //        }
-        progressDialog.setMessage("Uploading");
+        progressDialog.setMessage("Cargando, espere un momento");
         progressDialog.show();
 
         HashMap<String, RequestBody> map = new HashMap<String, RequestBody>();
@@ -281,10 +284,10 @@ public class AdditionalInfoActivity extends AppCompatActivity {
                         third_XRay_Image.setImageResource(R.drawable.image_border);
                         third_XRay_Image_uri = null;
                         AlertDialog.Builder builder=new AlertDialog.Builder(AdditionalInfoActivity.this);
-                        builder.setTitle("Result")
-                                .setMessage("Success Upload.")
+                        builder.setTitle("Resultado")
+                                .setMessage("Envio Exitoso")
                                 .setCancelable(false)
-                                .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                                .setPositiveButton("Si", new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog, int which) {
                                         Intent resultIntent = new Intent();
                                         resultIntent.putExtra("additionalinfo", "success");

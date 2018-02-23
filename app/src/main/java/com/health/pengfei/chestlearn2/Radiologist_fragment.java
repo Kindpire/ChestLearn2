@@ -155,7 +155,7 @@ public class Radiologist_fragment extends Fragment {
                     Toast.makeText(getActivity().getApplicationContext(),"Please Select Image For Upload", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                progressDialog.setMessage("Uploading");
+                progressDialog.setMessage("Cargando, espere un momento");
                 progressDialog.show();
                 HashMap<String, RequestBody> map = new HashMap<String, RequestBody>();
                 map.put("id",toRequestBody("1"));

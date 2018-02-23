@@ -20,14 +20,14 @@ public class NoticeDialogFragment extends DialogFragment
     public Dialog onCreateDialog(Bundle savedInstanceState)
     {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setMessage("Not 3 photos, still want to upload?")
+        builder.setMessage("No 3 fotos, ¿aún quieres subirlas?")
                 .setCancelable(false)
-                .setPositiveButton("YES", new DialogInterface.OnClickListener() {
+                .setPositiveButton("SI", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         setResult(id);
                     }
                 })
-                .setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
+                .setNegativeButton("CANCELAR", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         setResult(id);
                     }

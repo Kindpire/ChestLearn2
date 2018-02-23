@@ -152,10 +152,10 @@ public class NurseFragment extends Fragment {
                 if ( (actionId == EditorInfo.IME_ACTION_DONE) || ((event.getKeyCode() == KeyEvent.KEYCODE_ENTER) && (event.getAction() == KeyEvent.ACTION_DOWN ))){
                     AlertDialog.Builder builder=new AlertDialog.Builder(getContext());
 
-                    builder.setTitle("Are you sure")
-                            .setMessage("Is patient last name correct?")
+                    builder.setTitle("")
+                            .setMessage("Es el apellido del paciente correcto?")
                             .setCancelable(false)
-                            .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                            .setPositiveButton("Si", new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int which) {
 
                                     patientLastName.setEnabled(false);
@@ -330,7 +330,7 @@ public class NurseFragment extends Fragment {
             return;
         }
 
-        progressDialog.setMessage("Uploading");
+        progressDialog.setMessage("Cargando, espere un momento");
         progressDialog.show();
 
         HashMap<String, RequestBody> map = new HashMap<String, RequestBody>();
@@ -360,7 +360,7 @@ public class NurseFragment extends Fragment {
 //                        Toast.makeText(getActivity().getApplicationContext(), serverResponse.getMessage(), Toast.LENGTH_SHORT).show();
                         AlertDialog.Builder builder=new AlertDialog.Builder(getActivity());
                         builder.setTitle("Result")
-                                .setMessage("Success Upload.")
+                                .setMessage("Envio Exitoso")
                                 .setCancelable(false)
                                 .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog, int which) {

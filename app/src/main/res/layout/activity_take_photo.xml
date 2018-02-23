@@ -26,7 +26,6 @@
         android:id="@+id/button_takePhoto"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="0dp"
         android:layout_marginLeft="62dp"
         android:text="@string/takephoto"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -36,9 +35,8 @@
         android:id="@+id/button_confirm"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="0dp"
         android:layout_marginRight="74dp"
-        android:text="confirm"
+        android:text="Confirmar"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="parent" />
 </android.support.constraint.ConstraintLayout>
