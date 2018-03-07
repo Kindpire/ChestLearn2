@@ -12,6 +12,8 @@
     <string name="error_field_required">This field is required</string>
     <string name="title_activity_main">Peru TB project</string>
 
+    <string name="nurse_panel">Panel de la enfermera</string>
+    <string name="radiologist_panel">Panel de Radiólogo</string>
     <string name="title_activity_loading_page">LoadingPage</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
     <string name="takephoto">Tomar foto</string>
@@ -26,11 +28,18 @@
     <string name="intro_require_additionaldd">Tienes información adicional para subir?</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-
+    <string name="note">Nota</string>
     <string name="action_settings">Configuraciones</string>
-
+    <string name="do_you_wanna_upload">Quieres subir una imagen de rayos X?</string>
+    <string name="xrayimg">Imagen de rayos X:</string>
+    <string name="result">Resultado</string>
+    <string name="successfulupload">Carga exitosa</string>
+    <string name="saveinfo">Guardar la información</string>
+    <string name="noxrayimg">Sin imagen de rayos X</string>
+    <string name="plztakexrayimgfirst">Por favor, tome la imagen de rayos X primero</string>
+    <string name="submit2">Enviar</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_additional_info">" Información adicional"</string>
-    <string name="takkeRetakePhoto">Tomar foto/Volver  a tomar</string>
+    <string name="RetakePhoto">Volver a tomar</string>
 </resources>

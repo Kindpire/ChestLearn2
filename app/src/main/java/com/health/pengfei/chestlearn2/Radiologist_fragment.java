@@ -2,6 +2,7 @@ package com.health.pengfei.chestlearn2;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.BitmapFactory;
@@ -11,6 +12,7 @@ import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.provider.Settings;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -179,6 +181,15 @@ public class Radiologist_fragment extends Fragment {
                             if (serverResponse.getError()) {
                                 Toast.makeText(getActivity().getApplicationContext(), serverResponse.getMessage(), Toast.LENGTH_SHORT).show();
                             }else {
+                                AlertDialog.Builder builder=new AlertDialog.Builder(getActivity());
+                                builder.setTitle(R.string.result)
+                                        .setMessage(R.string.successfulupload)
+                                        .setCancelable(false)
+                                        .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface dialog, int which) {
+                                            }
+                                        })
+                                        .show();
                                 radio_image_view.setImageResource(R.drawable.image_border);
                                 radio_note_textField.setText(" ");
                                 patientLastName.setText("");

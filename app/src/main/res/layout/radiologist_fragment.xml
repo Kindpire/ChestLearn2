@@ -17,7 +17,7 @@
         android:layout_marginRight="8dp"
         android:layout_marginTop="8dp"
         android:ems="10"
-        android:hint="Patient Last Name"
+        android:hint="@string/patientlastname"
         android:inputType="textPersonName"
         app:layout_constraintBottom_toTopOf="@+id/radio_image"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -33,7 +33,7 @@
         android:layout_marginRight="8dp"
         android:layout_marginStart="50dp"
         android:layout_marginTop="8dp"
-        android:text="Enviar"
+        android:text="@string/submit2"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_bias="0.425"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -82,7 +82,7 @@
             android:id="@+id/raidoNoteTextfield"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Note"
+            android:hint="@string/note"
             android:scrollIndicators="right"
             android:scrollbars="vertical" />
     </android.support.design.widget.TextInputLayout>

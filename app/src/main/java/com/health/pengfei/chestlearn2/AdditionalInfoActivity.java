@@ -181,7 +181,7 @@ public class AdditionalInfoActivity extends AppCompatActivity {
                             .show();
                 } else {
                     AlertDialog.Builder builder=new AlertDialog.Builder(AdditionalInfoActivity.this);
-                    builder.setTitle("Confirmation")
+                    builder.setTitle("Confirmación")
                             .setMessage(
                                     "Confirmación")
                             .setCancelable(false)

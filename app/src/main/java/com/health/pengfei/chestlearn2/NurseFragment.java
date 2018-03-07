@@ -224,8 +224,8 @@ public class NurseFragment extends Fragment {
 //                    Toast.makeText(getActivity().getApplicationContext(), "Main X ray must be at first place", Toast.LENGTH_SHORT).show();
                     //TODO open a dialog box to "yes" continue to send or "no" to cancel the submit request.
                     AlertDialog.Builder alertbuilder=new AlertDialog.Builder(getActivity());
-                    alertbuilder.setTitle("No Patient Last Name.")
-                            .setMessage("Please input patient last name.")
+                    alertbuilder.setTitle(R.string.noxrayimg)
+                            .setMessage(R.string.plztakexrayimgfirst)
                             .setCancelable(false)
                             .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int which) {
@@ -257,8 +257,8 @@ public class NurseFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 AlertDialog.Builder builder=new AlertDialog.Builder(getActivity());
-                builder.setTitle("X-ray image:")
-                        .setMessage("Do you want to upload X-ray image?")
+                builder.setTitle(R.string.xrayimg)
+                        .setMessage(R.string.do_you_wanna_upload)
                         .setCancelable(false)
                         .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
@@ -359,8 +359,8 @@ public class NurseFragment extends Fragment {
 
 //                        Toast.makeText(getActivity().getApplicationContext(), serverResponse.getMessage(), Toast.LENGTH_SHORT).show();
                         AlertDialog.Builder builder=new AlertDialog.Builder(getActivity());
-                        builder.setTitle("Result")
-                                .setMessage("Envio Exitoso")
+                        builder.setTitle(R.string.result)
+                                .setMessage(R.string.successfulupload)
                                 .setCancelable(false)
                                 .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog, int which) {
