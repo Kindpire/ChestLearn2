@@ -125,8 +125,8 @@ public class AdditionalInfoActivity extends AppCompatActivity {
                 if(second_XRay_Image_uri==null && third_XRay_Image_uri==null){
                     //open a dialog box to "yes" continue to send or "no" to cancel the submit request.
                     AlertDialog.Builder builder=new AlertDialog.Builder(AdditionalInfoActivity.this);
-                    builder.setTitle("El examen físico y los resultados de laboratorio están vacíos")
-                            .setMessage("Subir imagen de rayos X?")
+                    builder.setTitle(R.string.exam_lab_result_empty)
+                            .setMessage(R.string.upload_xray_img)
                             .setCancelable(false)
                             .setPositiveButton("Si", new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int which) {
@@ -143,11 +143,11 @@ public class AdditionalInfoActivity extends AppCompatActivity {
                 } else if(second_XRay_Image_uri==null && third_XRay_Image_uri!=null){
                     //open a dialog box to "yes" continue to send or "no" to cancel the submit request.
                     AlertDialog.Builder builder=new AlertDialog.Builder(AdditionalInfoActivity.this);
-                    builder.setTitle("Physical exam result is empty")
+                    builder.setTitle(R.string.exam_result_empty)
                             .setCancelable(false)
                             .setMessage(
-                                    "El resultado del examen físico está vacío")
-                            .setPositiveButton("Si", new DialogInterface.OnClickListener() {
+                                    R.string.upload_lab_xray_img)
+                            .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int which) {
                                     uploadPics();
                                 }
@@ -164,10 +164,10 @@ public class AdditionalInfoActivity extends AppCompatActivity {
                     AlertDialog.Builder builder=new AlertDialog.Builder(AdditionalInfoActivity.this);
 
                     builder.setTitle(
-                            "El resultado del laboratorio está vacío")
-                            .setMessage("Sube el resultado del examen y la imagen de rayos X")
+                            R.string.lab_result_empty)
+                            .setMessage(R.string.upload_exam_xray_img)
                             .setCancelable(false)
-                            .setPositiveButton("Si", new DialogInterface.OnClickListener() {
+                            .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int which) {
                                     uploadPics();
                                 }
@@ -181,11 +181,11 @@ public class AdditionalInfoActivity extends AppCompatActivity {
                             .show();
                 } else {
                     AlertDialog.Builder builder=new AlertDialog.Builder(AdditionalInfoActivity.this);
-                    builder.setTitle("Confirmación")
+                    builder.setTitle(R.string.Confirmation)
                             .setMessage(
-                                    "Confirmación")
+                                    R.string.Confirmation)
                             .setCancelable(false)
-                            .setPositiveButton("Si", new DialogInterface.OnClickListener() {
+                            .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int which) {
                                     uploadPics();
                                 }
