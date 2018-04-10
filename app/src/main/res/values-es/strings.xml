@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Peru TB project</string>
+
+    <!-- Strings related to login -->
+    <string name="prompt_UserName">UserName</string>
+    <string name="prompt_password">Password (optional)</string>
+    <string name="action_sign_in">Sign in</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="error_invalid_UserName">This UserName address is invalid</string>
+    <string name="error_invalid_password">This password is too short</string>
+    <string name="error_incorrect_password">This password is incorrect</string>
+    <string name="error_field_required">This field is required</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!--WELCOME-->
+    <string name="welcome">Bienvenido</string>
+    <!--WELCOME TO THE PERU TB PROJECT-->
+    <string name="welcometoperutbproj">BIENVENIDOS AL PROYECTO PERU TB</string>
+
+    <!--No Patient Last Name.-->
+    <string name="no_patient_last_name">Sin apellido del paciente.</string>
+    <!--Please input patient last name.-->
+    <string name="please_input_patient_last_name">Por favor ingrese el apellido del paciente.</string>
+    <!--Is patient last name correct?-->
+    <string name="is_patient_last_name_correct">El apellido del paciente es correcto?.</string>
+    <string name="title_activity_main">Peru TB project</string>
+    <!--nurse panel-->
+    <string name="nurse_panel">Panel de la enfermera</string>
+    <!--radiologist panel-->
+    <string name="radiologist_panel">Panel de Radiólogo</string>
+    <!--Loading Page-->
+    <string name="title_activity_loading_page">LoadingPage</string>
+    <!--take photo-->
+    <string name="takephoto">Tomar foto</string>
+    <!--Yes-->
+    <string name="yes">Si</string>
+    <!--No-->
+    <string name="no">No</string>
+    <!--OK-->
+    <string name="ok">OK</string>
+    <!--Cancel-->
+    <string name="cancel">Cancelar</string>
+    <!--Submit-->
+    <string name="submitallimages">Enviar Imagenes</string>
+    <!--Edit-->
+    <string name="edit">Editar</string>
+    <!--Patient Last Name-->
+    <string name="patientlastname">Ingrese Apellido del Paciente</string>
+    <!--Take photo of X-ray image.-->
+    <string name="intro_xrayimg">Tomar foto a la placa de Torax</string>
+    <!--Medical examination results-->
+    <string name="intro_physicalexam">Resultados examen medico</string>
+    <!--Laboratory results-->
+    <string name="intro_labresult">Resultados Laboratorio</string>
+    <!--Do you have additional information to upload?-->
+    <string name="intro_require_additionaldd">Tienes información adicional para subir?</string>
+    <!--Loading, wait a moment-->
+    <string name="waitamoment">Cargando, espera un momento</string>
+
+    <!--Physical examination and laboratory results are empty-->
+    <string name="exam_lab_result_empty">El examen físico y los resultados de laboratorio están vacíos.</string>
+    <!--Upload X-ray image?-->
+    <string name="upload_xray_img">Subir imagen de rayos X?</string>
+
+    <!--The result of the laboratory is empty-->
+    <string name="lab_result_empty">El resultado del laboratorio está vacío.</string>
+    <!--Upload the exam result and the X-ray image?-->
+    <string name="upload_exam_xray_img">Sube el resultado del examen y la imagen de rayos X?</string>
+
+    <!--The result of the exam is empty-->
+    <string name="exam_result_empty">El resultado del examen físico está vacío.</string>
+    <!--Upload the lab result and the X-ray image?-->
+    <string name="upload_lab_xray_img">Sube el resultado del laboratorio y la imagen de rayos X?</string>
+
+    <!--Confirm-->
+    <string name="confirm">Confirmar</string>
+
+    <!--Confirmation-->
+    <string name="Confirmation">Validacion</string>
+    <!--Are you ready to proceed?-->
+    <string name="readtoproceed">Esta segura de continuar?</string>
+    <!--Note-->
+    <string name="note">Nota</string>
+    <!--Configurations-->
+    <string name="action_settings">Configuraciones</string>
+    <!--Do you want to upload an X-ray image?-->
+    <string name="do_you_wanna_upload">Quieres subir una imagen de rayos X?</string>
+    <!--X-ray image-->
+    <string name="xrayimg">Imagen de rayos X:</string>
+    <!--Result-->
+    <string name="result">Resultado</string>
+    <!--Successful Upload-->
+    <string name="successfulupload">Envio exitoso</string>
+    <!--Done-->
+    <string name="done">Fin</string>
+    <!--Save information-->
+    <string name="saveinfo">Guardar la información</string>
+    <!--No X-ray image-->
+    <string name="noxrayimg">Sin imagen de rayos X</string>
+    <!--Please take the X-ray image first.-->
+    <string name="plztakexrayimgfirst">Por favor, tome la imagen de rayos X primero</string>
+    <!--Submit-->
+    <string name="submit2">Enviar</string>
+    <!--Additional Information-->
+    <string name="title_activity_additional_info">"Información adicional"</string>
+    <!--Retake photo-->
+    <string name="RetakePhoto">Retomar</string>
+    <!--Clinic-->
+    <string name="Clinic">Centro de Salud</string>
+    <!--Healthcare Professional Name-->
+    <string name="healthcare_pro_name">Nombre profesional de la salud</string>
+    <!--Nurse Email-->
+    <string name="nurse_email">Correo electrónico de la enfermera</string>
+</resources>

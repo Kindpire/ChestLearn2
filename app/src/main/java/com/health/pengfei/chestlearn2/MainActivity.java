@@ -28,10 +28,10 @@ public class MainActivity extends AppCompatActivity
 
         AlertDialog.Builder builder=new AlertDialog.Builder(this);
 
-        builder.setTitle("Bienvenido")
-                .setMessage("BIENVENIDOS AL PROYECTO PERU TB")
+        builder.setTitle(R.string.welcome)
+                .setMessage(R.string.welcometoperutbproj)
                 .setCancelable(false)
-                .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                     }
                 }).show();

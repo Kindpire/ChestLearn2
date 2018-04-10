@@ -128,12 +128,12 @@ public class AdditionalInfoActivity extends AppCompatActivity {
                     builder.setTitle(R.string.exam_lab_result_empty)
                             .setMessage(R.string.upload_xray_img)
                             .setCancelable(false)
-                            .setPositiveButton("Si", new DialogInterface.OnClickListener() {
+                            .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int which) {
                                     uploadPics();
                                 }
                             })
-                            .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                            .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
                                     return;
@@ -152,7 +152,7 @@ public class AdditionalInfoActivity extends AppCompatActivity {
                                     uploadPics();
                                 }
                             })
-                            .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                            .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
                                     return;
@@ -172,7 +172,7 @@ public class AdditionalInfoActivity extends AppCompatActivity {
                                     uploadPics();
                                 }
                             })
-                            .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                            .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
                                     return;
@@ -183,14 +183,14 @@ public class AdditionalInfoActivity extends AppCompatActivity {
                     AlertDialog.Builder builder=new AlertDialog.Builder(AdditionalInfoActivity.this);
                     builder.setTitle(R.string.Confirmation)
                             .setMessage(
-                                    R.string.Confirmation)
+                                    R.string.readtoproceed)
                             .setCancelable(false)
                             .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int which) {
                                     uploadPics();
                                 }
                             })
-                            .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                            .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
                                     return;
@@ -252,7 +252,7 @@ public class AdditionalInfoActivity extends AppCompatActivity {
 //            Toast.makeText(this.getApplicationContext(), "Main X ray must be at first place", Toast.LENGTH_SHORT).show();
 //            return;
 //        }
-        progressDialog.setMessage("Cargando, espere un momento");
+        progressDialog.setMessage(this.getApplicationContext().getText(R.string.waitamoment));
         progressDialog.show();
 
         HashMap<String, RequestBody> map = new HashMap<String, RequestBody>();
@@ -284,10 +284,10 @@ public class AdditionalInfoActivity extends AppCompatActivity {
                         third_XRay_Image.setImageResource(R.drawable.image_border);
                         third_XRay_Image_uri = null;
                         AlertDialog.Builder builder=new AlertDialog.Builder(AdditionalInfoActivity.this);
-                        builder.setTitle("Resultado")
-                                .setMessage("Envio Exitoso")
+                        builder.setTitle(R.string.result)
+                                .setMessage(R.string.successfulupload)
                                 .setCancelable(false)
-                                .setPositiveButton("Si", new DialogInterface.OnClickListener() {
+                                .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog, int which) {
                                         Intent resultIntent = new Intent();
                                         resultIntent.putExtra("additionalinfo", "success");

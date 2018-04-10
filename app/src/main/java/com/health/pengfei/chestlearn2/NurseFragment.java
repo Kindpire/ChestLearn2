@@ -153,15 +153,15 @@ public class NurseFragment extends Fragment {
                     AlertDialog.Builder builder=new AlertDialog.Builder(getContext());
 
                     builder.setTitle("")
-                            .setMessage("Es el apellido del paciente correcto?")
+                            .setMessage(R.string.is_patient_last_name_correct)
                             .setCancelable(false)
-                            .setPositiveButton("Si", new DialogInterface.OnClickListener() {
+                            .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int which) {
 
                                     patientLastName.setEnabled(false);
                                 }
                             })
-                            .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                            .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int which) {
                                     patientLastName.setEnabled(true );
                                     patientLastName.requestFocus();
@@ -207,10 +207,10 @@ public class NurseFragment extends Fragment {
 //                    Toast.makeText(getActivity().getApplicationContext(), "Main X ray must be at first place", Toast.LENGTH_SHORT).show();
                     //TODO open a dialog box to "yes" continue to send or "no" to cancel the submit request.
                     AlertDialog.Builder alertbuilder=new AlertDialog.Builder(getActivity());
-                    alertbuilder.setTitle("No X-Ray Image")
-                            .setMessage("Please take X-Ray Image first.")
+                    alertbuilder.setTitle(R.string.noxrayimg)
+                            .setMessage(R.string.plztakexrayimgfirst)
                             .setCancelable(false)
-                            .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                            .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int which) {
                                 }
                             })
@@ -227,7 +227,7 @@ public class NurseFragment extends Fragment {
                     alertbuilder.setTitle(R.string.noxrayimg)
                             .setMessage(R.string.plztakexrayimgfirst)
                             .setCancelable(false)
-                            .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                            .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int which) {
                                 }
                             })
@@ -260,12 +260,12 @@ public class NurseFragment extends Fragment {
                 builder.setTitle(R.string.xrayimg)
                         .setMessage(R.string.do_you_wanna_upload)
                         .setCancelable(false)
-                        .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                        .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
                                 uploadPics();
                             }
                         })
-                        .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                        .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 return;
@@ -305,10 +305,10 @@ public class NurseFragment extends Fragment {
         if (mainTppFileName == null) {
             //TODO open a dialog box to "yes" continue to send or "no" to cancel the submit request.
             AlertDialog.Builder alertbuilder=new AlertDialog.Builder(getActivity());
-            alertbuilder.setTitle("No X-Ray Image")
-                    .setMessage("Please take X-Ray Image first.")
+            alertbuilder.setTitle(R.string.noxrayimg)
+                    .setMessage(R.string.plztakexrayimgfirst)
                     .setCancelable(false)
-                    .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                    .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
                         }
                     })
@@ -319,10 +319,10 @@ public class NurseFragment extends Fragment {
 //                    Toast.makeText(getActivity().getApplicationContext(), "Main X ray must be at first place", Toast.LENGTH_SHORT).show();
             //TODO open a dialog box to "yes" continue to send or "no" to cancel the submit request.
             AlertDialog.Builder alertbuilder=new AlertDialog.Builder(getActivity());
-            alertbuilder.setTitle("No Patient Last Name.")
-                    .setMessage("Please input patient last name.")
+            alertbuilder.setTitle(R.string.noxrayimg)
+                    .setMessage(R.string.plztakexrayimgfirst)
                     .setCancelable(false)
-                    .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                    .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
                         }
                     })
@@ -330,7 +330,7 @@ public class NurseFragment extends Fragment {
             return;
         }
 
-        progressDialog.setMessage("Cargando, espere un momento");
+        progressDialog.setMessage(getActivity().getApplicationContext().getText(R.string.waitamoment));
         progressDialog.show();
 
         HashMap<String, RequestBody> map = new HashMap<String, RequestBody>();
@@ -362,7 +362,7 @@ public class NurseFragment extends Fragment {
                         builder.setTitle(R.string.result)
                                 .setMessage(R.string.successfulupload)
                                 .setCancelable(false)
-                                .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                                .setPositiveButton(R.string.done, new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog, int which) {
                                     }
                                 })

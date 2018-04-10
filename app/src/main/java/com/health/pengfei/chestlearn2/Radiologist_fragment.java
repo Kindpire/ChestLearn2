@@ -157,7 +157,7 @@ public class Radiologist_fragment extends Fragment {
                     Toast.makeText(getActivity().getApplicationContext(),"Please Select Image For Upload", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                progressDialog.setMessage("Cargando, espere un momento");
+                progressDialog.setMessage(getActivity().getApplicationContext().getText(R.string.waitamoment));
                 progressDialog.show();
                 HashMap<String, RequestBody> map = new HashMap<String, RequestBody>();
                 map.put("id",toRequestBody("1"));
@@ -185,7 +185,7 @@ public class Radiologist_fragment extends Fragment {
                                 builder.setTitle(R.string.result)
                                         .setMessage(R.string.successfulupload)
                                         .setCancelable(false)
-                                        .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                                        .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
                                             public void onClick(DialogInterface dialog, int which) {
                                             }
                                         })
