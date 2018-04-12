@@ -152,9 +152,18 @@ public class Radiologist_fragment extends Fragment {
                     builder.addFormDataPart("uploadedfile[]", file.getName(), uploadedfile);
 
                 }
-                if(mainTppFileName == null)
-                {
-                    Toast.makeText(getActivity().getApplicationContext(),"Please Select Image For Upload", Toast.LENGTH_SHORT).show();
+                if (mainTppFileName == null) {
+//                    Toast.makeText(getActivity().getApplicationContext(), "Main X ray must be at first place", Toast.LENGTH_SHORT).show();
+                    //TODO open a dialog box to "yes" continue to send or "no" to cancel the submit request.
+                    AlertDialog.Builder alertbuilder=new AlertDialog.Builder(getActivity());
+                    alertbuilder.setTitle(R.string.noxrayimg)
+                            .setMessage(R.string.plztakexrayimgfirst)
+                            .setCancelable(false)
+                            .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                }
+                            })
+                            .show();
                     return;
                 }
                 progressDialog.setMessage(getActivity().getApplicationContext().getText(R.string.waitamoment));
@@ -185,7 +194,7 @@ public class Radiologist_fragment extends Fragment {
                                 builder.setTitle(R.string.result)
                                         .setMessage(R.string.successfulupload)
                                         .setCancelable(false)
-                                        .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                                        .setPositiveButton(R.string.done, new DialogInterface.OnClickListener() {
                                             public void onClick(DialogInterface dialog, int which) {
                                             }
                                         })

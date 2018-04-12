@@ -287,7 +287,7 @@ public class AdditionalInfoActivity extends AppCompatActivity {
                         builder.setTitle(R.string.result)
                                 .setMessage(R.string.successfulupload)
                                 .setCancelable(false)
-                                .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                                .setPositiveButton(R.string.done, new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog, int which) {
                                         Intent resultIntent = new Intent();
                                         resultIntent.putExtra("additionalinfo", "success");
