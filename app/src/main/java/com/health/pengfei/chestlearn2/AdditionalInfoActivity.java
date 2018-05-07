@@ -20,6 +20,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -50,6 +52,8 @@ public class AdditionalInfoActivity extends AppCompatActivity {
     private ImageView second_XRay_Image,third_XRay_Image;
     private String main_XRay_Image_uri, second_XRay_Image_uri,third_XRay_Image_uri;
     private Button second_XRay_button,third_XRay_button, submitButton;
+
+    Account patient = new Account("", false, false, false);
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,7 +76,7 @@ public class AdditionalInfoActivity extends AppCompatActivity {
         patientlastname = intent.getStringExtra("patientlastname");
         main_XRay_Image_uri = X_Img_url;
         String mainTppFileName = null;
-
+        patient = (Account)intent.getSerializableExtra("account");
         textview_patient_last_name.setText(patientlastname);
 
         if (X_Img_url != null) {
@@ -109,6 +113,7 @@ public class AdditionalInfoActivity extends AppCompatActivity {
                 Intent i = new Intent(AdditionalInfoActivity.this, TakePhoto.class);
 
                 startActivityForResult(i,2);
+                patient.setFirstPic(true);
             }
         });
         third_XRay_button.setOnClickListener(new View.OnClickListener() {
@@ -117,6 +122,7 @@ public class AdditionalInfoActivity extends AppCompatActivity {
                 Intent i = new Intent(AdditionalInfoActivity.this, TakePhoto.class);
 
                 startActivityForResult(i,3);
+                patient.setFirstPic(true);
             }
         });
         submitButton.setOnClickListener(new View.OnClickListener() {
@@ -269,6 +275,7 @@ public class AdditionalInfoActivity extends AppCompatActivity {
         map.put("mainTppFileName", toRequestBody(mainTppFileName));
 
         List<MultipartBody.Part> parts = builder.build().parts();
+
         ApiUtil.uploadFile(parts, map).enqueue(new Callback<ServerResponse>() {
             @Override
             public void onResponse(Call<ServerResponse> call, Response<ServerResponse> response) {
@@ -278,6 +285,22 @@ public class AdditionalInfoActivity extends AppCompatActivity {
                     if (serverResponse.getError()) {
                         Toast.makeText(AdditionalInfoActivity.this.getApplicationContext(), serverResponse.getMessage(), Toast.LENGTH_SHORT).show();
                     } else {
+                        List<Account> results = new ArrayList<Account>();
+                        AccountRecord account = new AccountRecord();
+                        File file = account.createFile();
+                        try {
+                            results = account.readFile();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+
+                        results = account.updateAccount(results, patient);
+
+                        try {
+                            account.saveAccounts(results);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
                         Toast.makeText(AdditionalInfoActivity.this.getApplicationContext(), serverResponse.getMessage(), Toast.LENGTH_SHORT).show();
                         second_XRay_Image.setImageResource(R.drawable.image_border);
                         second_XRay_Image_uri = null;

@@ -25,6 +25,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 
 import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -42,6 +44,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 import static android.app.Activity.RESULT_CANCELED;
+
 
 
 /**
@@ -77,6 +80,8 @@ public class NurseFragment extends Fragment {
     private ProgressDialog progressDialog;
 
     private OnFragmentInteractionListener mListener;
+
+    Account patient = new Account("",false,false,false );
 
     public NurseFragment() {
         // Required empty public constructor
@@ -134,9 +139,10 @@ public class NurseFragment extends Fragment {
         main_XRay_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                 Intent i = new Intent(getActivity(),TakePhoto.class);
+                Intent i = new Intent(getActivity(),TakePhoto.class);
 
                 startActivityForResult(i,1);
+                patient.setFirstPic(true);
             }
         });
         edit_Button.setOnClickListener(new View.OnClickListener() {
@@ -159,6 +165,7 @@ public class NurseFragment extends Fragment {
                                 public void onClick(DialogInterface dialog, int which) {
 
                                     patientLastName.setEnabled(false);
+                                    patient.setPatientName(patientLastName.getText().toString());
                                 }
                             })
                             .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
@@ -250,6 +257,7 @@ public class NurseFragment extends Fragment {
                 Intent i = new Intent(getActivity(),AdditionalInfoActivity.class);
                 i.putExtra("patientlastname", patientLName);
                 i.putExtra("x_img_uri", main_XRay_Image_uri);
+                i.putExtra("account", patient);
                 startActivityForResult(i,9);
             }
         });
@@ -347,6 +355,7 @@ public class NurseFragment extends Fragment {
         map.put("mainTppFileName", toRequestBody(mainTppFileName));
 
         List<MultipartBody.Part> parts = builder.build().parts();
+
         ApiUtil.uploadFile(parts, map).enqueue(new Callback<ServerResponse>() {
             @Override
             public void onResponse(Call<ServerResponse> call, Response<ServerResponse> response) {
@@ -356,6 +365,23 @@ public class NurseFragment extends Fragment {
                     if (serverResponse.getError()) {
                         Toast.makeText(getActivity().getApplicationContext(), serverResponse.getMessage(), Toast.LENGTH_SHORT).show();
                     } else {
+                        //TODO: read record file, check if current account is in file, update account records, save to record file
+                        List<Account> results = new ArrayList<Account>();
+                        AccountRecord account = new AccountRecord();
+                        File file = account.createFile();
+                        try {
+                            results = account.readFile();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+
+                        results = account.updateAccount(results, patient);
+
+                        try {
+                            account.saveAccounts(results);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
 
 //                        Toast.makeText(getActivity().getApplicationContext(), serverResponse.getMessage(), Toast.LENGTH_SHORT).show();
                         AlertDialog.Builder builder=new AlertDialog.Builder(getActivity());
