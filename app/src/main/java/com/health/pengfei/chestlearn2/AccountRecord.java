@@ -18,14 +18,12 @@ public class AccountRecord {
     public static final String fileDirectory = "/TB_TEST";
 
     public File createFile() {
-        // Directory
+
         String state = Environment.getExternalStorageState();
         File dir = new File(Environment.getExternalStoragePublicDirectory(
                 Environment.DIRECTORY_DOCUMENTS), fileDirectory);
-        // File
         File file = new File(dir.getPath() + File.separator + fileName);
 
-        //File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
         try {
             if (!dir.exists()) {
                 dir.mkdirs();
@@ -38,6 +36,14 @@ public class AccountRecord {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        if (!file.exists()) {
+            try {
+                file.createNewFile();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
         return file;
     }
 
@@ -46,7 +52,7 @@ public class AccountRecord {
         // make account record string
         String data = "";
         for (Account account : accounts) {
-            data += getAccountString(account) + "/n";
+            data += getAccountString(account) + "\n";
         }
         // save account records in file
         FileWriter fileWriter = new FileWriter(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS)
@@ -67,15 +73,15 @@ public class AccountRecord {
 
     // get single patient info
     private static String getAccountString(Account account) {
-        return account.getPatientName() + "/t" + account.isFirstPic() + "/t" + account.isSecondPic() + "/t" + account.isThirdPic();
+        return account.getPatientName() + "\t" + account.isFirstPic() + "\t" + account.isSecondPic() + "\t" + account.isThirdPic();
     }
 
     // read patients info from file
-    public static List<Account> readFile() throws IOException {
-        List<Account> result = new ArrayList<Account>();
+    public static ArrayList readFile() throws IOException {
+        ArrayList result = new ArrayList<>();
 
         BufferedReader reader = new BufferedReader(new FileReader(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS)
-                + "/" + fileDirectory + "/"+ fileName));
+               + "/" + fileDirectory + "/"+ fileName));
         String line;
         // read file by line
         while ((line = reader.readLine()) != null) {
@@ -87,7 +93,7 @@ public class AccountRecord {
 
     // get patient object from the string in file
     private static Account getAccountFromString(String line) {
-        String[] parts = line.split("/t");
+        String[] parts = line.split("\t");
 
         return new Account(
                 parts[0],
@@ -98,7 +104,7 @@ public class AccountRecord {
     }
 
     //update patients info
-    public static List updateAccount(List<Account> results, Account patient){
+    public static ArrayList updateAccount(ArrayList<Account> results, Account patient){
         //update if patient exists
         if (results.contains(patient)){
             for (Account result:results) {

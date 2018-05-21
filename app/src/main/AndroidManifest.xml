@@ -54,6 +54,9 @@
             android:name=".doctor_setting"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".History"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".TakePhoto"
             android:screenOrientation="portrait" />
         <activity

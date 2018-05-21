@@ -1,5 +1,6 @@
 package com.health.pengfei.chestlearn2;
 
+import android.Manifest;
 import android.app.Activity;
 //import android.app.Fragment;
 import android.app.ProgressDialog;
@@ -7,9 +8,12 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 //v4 and app's Fragment are different, v4 support 1.6 minimum, app for 3.0
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 
 import android.support.v7.app.AlertDialog;
@@ -44,7 +48,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 import static android.app.Activity.RESULT_CANCELED;
-
+import static android.content.ContentValues.TAG;
 
 
 /**
@@ -151,7 +155,6 @@ public class NurseFragment extends Fragment {
                 patientLastName.setEnabled(true);
             }
         });
-
         patientLastName.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
@@ -366,7 +369,7 @@ public class NurseFragment extends Fragment {
                         Toast.makeText(getActivity().getApplicationContext(), serverResponse.getMessage(), Toast.LENGTH_SHORT).show();
                     } else {
                         //TODO: read record file, check if current account is in file, update account records, save to record file
-                        List<Account> results = new ArrayList<Account>();
+                        ArrayList<Account> results = new ArrayList<Account>();
                         AccountRecord account = new AccountRecord();
                         File file = account.createFile();
                         try {
@@ -498,4 +501,5 @@ public class NurseFragment extends Fragment {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
+
 }

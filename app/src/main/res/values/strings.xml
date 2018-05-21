@@ -87,6 +87,8 @@
     <string name="note">Note</string>
     <!--Configurations-->
     <string name="action_settings">Configurations</string>
+    <!--History-->
+    <string name="history">History</string>
     <!--Do you want to upload an X-ray image?-->
     <string name="do_you_wanna_upload">Do you want to upload an X-ray image?</string>
     <!--X-ray image-->

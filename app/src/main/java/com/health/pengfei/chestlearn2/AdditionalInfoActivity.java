@@ -113,7 +113,7 @@ public class AdditionalInfoActivity extends AppCompatActivity {
                 Intent i = new Intent(AdditionalInfoActivity.this, TakePhoto.class);
 
                 startActivityForResult(i,2);
-                patient.setFirstPic(true);
+                patient.setSecondPic(true);
             }
         });
         third_XRay_button.setOnClickListener(new View.OnClickListener() {
@@ -122,7 +122,7 @@ public class AdditionalInfoActivity extends AppCompatActivity {
                 Intent i = new Intent(AdditionalInfoActivity.this, TakePhoto.class);
 
                 startActivityForResult(i,3);
-                patient.setFirstPic(true);
+                patient.setThirdPic(true);
             }
         });
         submitButton.setOnClickListener(new View.OnClickListener() {
@@ -285,7 +285,7 @@ public class AdditionalInfoActivity extends AppCompatActivity {
                     if (serverResponse.getError()) {
                         Toast.makeText(AdditionalInfoActivity.this.getApplicationContext(), serverResponse.getMessage(), Toast.LENGTH_SHORT).show();
                     } else {
-                        List<Account> results = new ArrayList<Account>();
+                        ArrayList<Account> results = new ArrayList<Account>();
                         AccountRecord account = new AccountRecord();
                         File file = account.createFile();
                         try {
