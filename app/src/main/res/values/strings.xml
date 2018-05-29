@@ -22,11 +22,11 @@
     <string name="welcometoperutbproj">WELCOME TO THE PERU TB PROJECT</string>
 
     <!--No Patient Last Name.-->
-    <string name="no_patient_last_name">No Patient Last Name.</string>
+    <string name="no_patient_last_name">No Patient ID.</string>
     <!--Please input patient last name.-->
-    <string name="please_input_patient_last_name">Please input patient last name.</string>
+    <string name="please_input_patient_last_name">Please input patient ID.</string>
     <!--Is patient last name correct?-->
-    <string name="is_patient_last_name_correct">Is patient last name correct?</string>
+    <string name="is_patient_last_name_correct">Is patient ID correct?</string>
     <string name="title_activity_main">Peru TB project</string>
     <!--nurse panel-->
     <string name="nurse_panel">Nurse Panel</string>
@@ -49,7 +49,7 @@
     <!--Edit-->
     <string name="edit">Edit</string>
     <!--Patient Last Name-->
-    <string name="patientlastname">Patient Last Name</string>
+    <string name="patientlastname">Patient ID</string>
     <!--Take photo of X-ray image.-->
     <string name="intro_xrayimg">Take photo of X-ray image.</string>
     <!--Medical examination results-->

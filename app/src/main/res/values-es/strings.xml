@@ -22,11 +22,11 @@
     <string name="welcometoperutbproj">BIENVENIDOS AL PROYECTO PERU TB</string>
 
     <!--No Patient Last Name.-->
-    <string name="no_patient_last_name">Sin apellido del paciente.</string>
+    <string name="no_patient_last_name">Sin identificación del paciente.</string>
     <!--Please input patient last name.-->
-    <string name="please_input_patient_last_name">Por favor ingrese el apellido del paciente.</string>
+    <string name="please_input_patient_last_name">Ingrese la ID del paciente.</string>
     <!--Is patient last name correct?-->
-    <string name="is_patient_last_name_correct">El apellido del paciente es correcto?.</string>
+    <string name="is_patient_last_name_correct">El identificación del paciente es correcto?.</string>
     <string name="title_activity_main">Peru TB project</string>
     <!--nurse panel-->
     <string name="nurse_panel">Panel de la enfermera</string>
@@ -49,7 +49,7 @@
     <!--Edit-->
     <string name="edit">Editar</string>
     <!--Patient Last Name-->
-    <string name="patientlastname">Ingrese Apellido del Paciente</string>
+    <string name="patientlastname">ID del paciente</string>
     <!--Take photo of X-ray image.-->
     <string name="intro_xrayimg">Tomar foto a la placa de Torax</string>
     <!--Medical examination results-->

@@ -87,25 +87,27 @@ public class AdditionalInfoActivity extends AppCompatActivity {
 
         Log.e("HashMapTest", X_Img_url);
         Log.e("HashMapTest", mainTppFileName);
-        String  clinicName= sp.getString("clinicName","");
-        String  nurseName=  sp.getString("nurseName","");
-        final String  recipients=sp.getString("recipients","");
-        String  doc1=sp.getString("doc1","");
-        String  doc2=sp.getString("doc2","");
-        String  doc3=sp.getString("doc3","");
-        String uploadDeviceID = Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
+//        String  clinicName= sp.getString("clinicName","");
+//        String  nurseName=  sp.getString("nurseName","");
+//        final String  recipients=sp.getString("recipients","");
+//        String  doc1=sp.getString("doc1","");
+//        String  doc2=sp.getString("doc2","");
+//        String  doc3=sp.getString("doc3","");
+//        String uploadDeviceID = Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
 
-        HashMap<String, RequestBody> map = new HashMap<String, RequestBody>();
-        map.put("id", toRequestBody("1"));
-        map.put("patientLastName", toRequestBody(patientlastname));
-        map.put("uploadDeviceID", toRequestBody(uploadDeviceID));
-        map.put("uploadPersonType", toRequestBody("n"));
-        map.put("uploadNurseName", toRequestBody(nurseName));
-        map.put("clinicName", toRequestBody(clinicName));
-        map.put("doc1", toRequestBody(doc1));
-        map.put("doc2", toRequestBody(doc2));
-        map.put("doc3", toRequestBody(doc3));
-        map.put("mainTppFileName", toRequestBody(mainTppFileName));
+//        HashMap<String, RequestBody> map = new HashMap<String, RequestBody>();
+//        map.put("id", toRequestBody("1"));
+//        map.put("patientLastName", toRequestBody(patientlastname));
+//        map.put("uploadDeviceID", toRequestBody(uploadDeviceID));
+//        map.put("uploadPersonType", toRequestBody("n"));
+//        map.put("uploadNurseName", toRequestBody(nurseName));
+//        map.put("clinicName", toRequestBody(clinicName));
+//        map.put("doc1", toRequestBody(doc1));
+//        map.put("doc2", toRequestBody(doc2));
+//        map.put("doc3", toRequestBody(doc3));
+//        if(mainTppFileName!=null){
+//            map.put("mainTppFileName", toRequestBody(mainTppFileName));
+//        }
 
         second_XRay_button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -224,6 +226,9 @@ public class AdditionalInfoActivity extends AppCompatActivity {
         String uploadDeviceID = Secure.getString(this.getContentResolver(),Secure.ANDROID_ID);
 
         String mainTppFileName = null;
+        String add1TppFileName = null;
+        String add2TppFileName = null;
+
         check_two = false;
 
         MultipartBody.Builder builder = new MultipartBody.Builder()
@@ -242,6 +247,7 @@ public class AdditionalInfoActivity extends AppCompatActivity {
         if (second_XRay_Image_uri != null) {
             Uri imageUri = Uri.parse(second_XRay_Image_uri);
             File file = new File(imageUri.getPath());
+            add1TppFileName = file.getName();
             RequestBody uploadedfile = RequestBody.create(MediaType.parse("multipart/form-data"), file);
             builder.addFormDataPart("uploadedfile[]", file.getName(), uploadedfile);
 
@@ -250,14 +256,11 @@ public class AdditionalInfoActivity extends AppCompatActivity {
         if (third_XRay_Image_uri != null) {
             Uri imageUri = Uri.parse(third_XRay_Image_uri);
             File file = new File(imageUri.getPath());
+            add2TppFileName = file.getName();
             RequestBody uploadedfile = RequestBody.create(MediaType.parse("multipart/form-data"), file);
             builder.addFormDataPart("uploadedfile[]", file.getName(), uploadedfile);
         }
 
-//        if (mainTppFileName == null) {
-//            Toast.makeText(this.getApplicationContext(), "Main X ray must be at first place", Toast.LENGTH_SHORT).show();
-//            return;
-//        }
         progressDialog.setMessage(this.getApplicationContext().getText(R.string.waitamoment));
         progressDialog.show();
 
@@ -272,7 +275,15 @@ public class AdditionalInfoActivity extends AppCompatActivity {
         map.put("doc1", toRequestBody(doc1));
         map.put("doc2", toRequestBody(doc2));
         map.put("doc3", toRequestBody(doc3));
-        map.put("mainTppFileName", toRequestBody(mainTppFileName));
+        if(mainTppFileName!=null){
+            map.put("mainTppFileName", toRequestBody(mainTppFileName));
+        }
+        if(add1TppFileName!=null){
+            map.put("add1TppFileName", toRequestBody(add1TppFileName));
+        }
+        if(add2TppFileName!=null){
+            map.put("add2TppFileName", toRequestBody(add2TppFileName));
+        }
 
         List<MultipartBody.Part> parts = builder.build().parts();
 
@@ -340,21 +351,7 @@ public class AdditionalInfoActivity extends AppCompatActivity {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         Log.d("MyApp", "onActivityResult: " + requestCode);
         Log.d("MyApp", "resultCode:  " + resultCode);
-//        if (requestCode == REQUEST_EVALUATE)
-//        {
-//            String evaluate = data.getStringExtra(NoticeDialogFragment.RESPONSE_EVALUATE);
-//            System.out.println(evaluate);
-//            if (evaluate == "YES"){
-//                System.out.println("Yes, upload.");
-//                uploadPics();
-//            }else if (evaluate == "CANCEL"){
-//                System.out.println("Give up.");
-//            }
-//            Toast.makeText(this, evaluate, Toast.LENGTH_SHORT).show();
-//            Intent intent = new Intent();
-//            intent.putExtra(RESPONSE, evaluate);
-//            this.setResult(AdditionalInfoActivity.RESULT_OK, intent);
-//        }
+
         if(resultCode != RESULT_CANCELED) {
             if (requestCode == 2) {
                 System.out.println("From second" + data.getStringExtra("uri"));

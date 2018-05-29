@@ -227,15 +227,15 @@ public class NurseFragment extends Fragment {
                             .show();
                     return;
                 }
-                Log.v("Patient", patientLName);
+                Log.v("Patient name is: ", patientLName + " Length: " + patientLName.length());
+
                 System.out.println("PNAME");
                 System.out.println(patientLName);
-                if (patientLName.length()==0) {
-//                    Toast.makeText(getActivity().getApplicationContext(), "Main X ray must be at first place", Toast.LENGTH_SHORT).show();
+                if (patientLName.length()==0 || patientLName == null) {
                     //TODO open a dialog box to "yes" continue to send or "no" to cancel the submit request.
                     AlertDialog.Builder alertbuilder=new AlertDialog.Builder(getActivity());
-                    alertbuilder.setTitle(R.string.noxrayimg)
-                            .setMessage(R.string.plztakexrayimgfirst)
+                    alertbuilder.setTitle(R.string.no_patient_last_name)
+                            .setMessage(R.string.please_input_patient_last_name)
                             .setCancelable(false)
                             .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int which) {
@@ -243,6 +243,8 @@ public class NurseFragment extends Fragment {
                             })
                             .show();
                     return;
+                } else {
+                    patient.setPatientName(patientLastName.getText().toString());
                 }
                 HashMap<String, RequestBody> map = new HashMap<String, RequestBody>();
                 map.put("id", toRequestBody("1"));
@@ -326,12 +328,12 @@ public class NurseFragment extends Fragment {
                     .show();
             return;
         }
+        Log.v("Patient name is: ", patientLName + " Length: " + patientLName.length());
         if (patientLName.length()==0) {
-//                    Toast.makeText(getActivity().getApplicationContext(), "Main X ray must be at first place", Toast.LENGTH_SHORT).show();
             //TODO open a dialog box to "yes" continue to send or "no" to cancel the submit request.
             AlertDialog.Builder alertbuilder=new AlertDialog.Builder(getActivity());
-            alertbuilder.setTitle(R.string.noxrayimg)
-                    .setMessage(R.string.plztakexrayimgfirst)
+            alertbuilder.setTitle(R.string.no_patient_last_name)
+                    .setMessage(R.string.please_input_patient_last_name)
                     .setCancelable(false)
                     .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
@@ -339,6 +341,8 @@ public class NurseFragment extends Fragment {
                     })
                     .show();
             return;
+        } else {
+            patient.setPatientName(patientLastName.getText().toString());
         }
 
         progressDialog.setMessage(getActivity().getApplicationContext().getText(R.string.waitamoment));

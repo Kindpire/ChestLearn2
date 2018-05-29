@@ -168,7 +168,9 @@ public class Late_info extends AppCompatActivity {
         String patientLName= patientlastname;
         String uploadDeviceID = Settings.Secure.getString(this.getContentResolver(), Settings.Secure.ANDROID_ID);
         //TODO anybetter way to do it?
-        String mainTppFileName = "null";
+        String mainTppFileName = null;
+        String add1TppFileName = null;
+        String add2TppFileName = null;
 
         MultipartBody.Builder builder = new MultipartBody.Builder()
                 .setType(MultipartBody.FORM);
@@ -187,6 +189,7 @@ public class Late_info extends AppCompatActivity {
         if (Uri_add1 != null) {
             Uri imageUri = Uri.parse(Uri_add1);
             File file = new File(imageUri.getPath());
+            add1TppFileName = file.getName();
             RequestBody uploadedfile = RequestBody.create(MediaType.parse("multipart/form-data"), file);
             builder.addFormDataPart("uploadedfile[]", file.getName(), uploadedfile);
             Log.d("MyApp", "Uri_add1: "+file.getName());
@@ -195,6 +198,7 @@ public class Late_info extends AppCompatActivity {
         if (Uri_add2 != null) {
             Uri imageUri = Uri.parse(Uri_add2);
             File file = new File(imageUri.getPath());
+            add1TppFileName = file.getName();
             RequestBody uploadedfile = RequestBody.create(MediaType.parse("multipart/form-data"), file);
             builder.addFormDataPart("uploadedfile[]", file.getName(), uploadedfile);
             Log.d("MyApp", "Uri_add2: "+file.getName());
@@ -215,7 +219,15 @@ public class Late_info extends AppCompatActivity {
         map.put("doc1", toRequestBody(doc1));
         map.put("doc2", toRequestBody(doc2));
         map.put("doc3", toRequestBody(doc3));
-        map.put("mainTppFileName", toRequestBody(mainTppFileName));
+        if(mainTppFileName!=null){
+            map.put("mainTppFileName", toRequestBody(mainTppFileName));
+        }
+        if(add1TppFileName!=null){
+            map.put("add1TppFileName", toRequestBody(add1TppFileName));
+        }
+        if(add2TppFileName!=null){
+            map.put("add2TppFileName", toRequestBody(add2TppFileName));
+        }
 
         List<MultipartBody.Part> parts = builder.build().parts();
 
