@@ -61,11 +61,15 @@
     <!--Loading, wait a moment-->
     <string name="waitamoment">Cargando, espera un momento</string>
 
+    <!--Nothing changed.-->
+    <string name="nothing_to_upload">Nada para cargar.</string>
     <!--Physical examination and laboratory results are empty-->
     <string name="exam_lab_result_empty">El examen físico y los resultados de laboratorio están vacíos.</string>
     <!--Upload X-ray image?-->
     <string name="upload_xray_img">Subir imagen de rayos X?</string>
 
+    <!--No image updated, nothing to upload.-->
+    <string name="upload_nothing">No hay imagen actualizada, no hay nada que subir.</string>
     <!--The result of the laboratory is empty-->
     <string name="lab_result_empty">El resultado del laboratorio está vacío.</string>
     <!--Upload the exam result and the X-ray image?-->
@@ -109,6 +113,7 @@
     <string name="submit2">Enviar</string>
     <!--Additional Information-->
     <string name="title_activity_additional_info">"Información adicional"</string>
+    <string name="title_activity_late_info">Información tardía</string>
     <!--Retake photo-->
     <string name="RetakePhoto">Retomar</string>
     <!--Clinic-->
