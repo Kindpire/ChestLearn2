@@ -4,10 +4,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.health.pengfei.chestlearn2.Radiologist_fragment">
-
-    <!-- TODO: Update blank fragment layout -->
-
-
     <EditText
         android:id="@+id/patientLastName_Radio"
         android:layout_width="316dp"
@@ -45,14 +41,14 @@
         android:id="@+id/radio_image"
         android:layout_width="120dp"
         android:layout_height="120dp"
-        android:layout_marginStart="65dp"
+        android:layout_marginLeft="65dp"
+        android:layout_marginTop="80dp"
         android:cropToPadding="true"
         android:padding="1dp"
         android:scaleType="centerCrop"
-        app:srcCompat="@drawable/image_border"
-        android:layout_marginLeft="65dp"
         app:layout_constraintLeft_toLeftOf="parent"
-        tools:layout_editor_absoluteY="64dp" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/image_border" />
 
     <Button
         android:id="@+id/radioTakePhoto"

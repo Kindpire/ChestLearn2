@@ -5,11 +5,6 @@
     android:layout_height="match_parent"
     tools:context="com.health.pengfei.chestlearn2.NurseFragment"
     android:weightSum="1">
-
-
-    <!-- TODO: Update blank fragment layout -->
-
-
     <Button
         android:id="@+id/button_Nurse_submit"
         android:layout_width="wrap_content"
@@ -116,9 +111,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
+        android:layout_marginTop="8dp"
         android:text="@string/edit"
         app:layout_constraintEnd_toEndOf="parent"
-        tools:layout_editor_absoluteY="0dp" />
+        app:layout_constraintTop_toTopOf="parent" />
 
 
 </android.support.constraint.ConstraintLayout>

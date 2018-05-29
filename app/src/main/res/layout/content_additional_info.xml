@@ -7,7 +7,6 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.health.pengfei.chestlearn2.AdditionalInfoActivity"
     tools:showIn="@layout/activity_additional_info">
-    <!-- TODO: Update blank fragment layout -->
     <TextView
         android:id="@+id/tv_lab_result"
         android:layout_width="wrap_content"

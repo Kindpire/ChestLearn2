@@ -1,6 +1,7 @@
 package com.health.pengfei.chestlearn2;
 
 import android.os.Environment;
+import android.util.Log;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -105,22 +106,26 @@ public class AccountRecord {
 
     //update patients info
     public static ArrayList updateAccount(ArrayList<Account> results, Account patient){
+        boolean exist = false;
+        Log.d("MyApp","Start Update Account");
+        Log.d("MyApp","Patient is: " + patient.getPatientName());
         //update if patient exists
-        if (results.contains(patient)){
+//        if (results.contains(patient)){
             for (Account result:results) {
                 if(result.getPatientName().equals(patient.getPatientName())) {
+                    exist = true;
                     result.setFirstPic(patient.isFirstPic());
                     result.setSecondPic(patient.isSecondPic());
                     result.setThirdPic(patient.isThirdPic());
                     break;
                 }
             }
-        }
+//        }
         //add new patient to list
-        else {
+        if (!exist) {
+                Log.d("MyApp","Not Exist, add new!");
             results.add(patient);
         }
-
         return results;
     }
 }

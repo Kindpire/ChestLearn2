@@ -46,14 +46,15 @@ public class TakePhoto extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_take_photo);
+        Log.d("MyApp","CallingApp: "+getCallingActivity());
         confirmButton=(Button)findViewById(R.id.button_confirm);
         confirmButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 Intent data= new Intent();
                 data.putExtra("uri",mCurrentPhotoPath);
                 setResult(RESULT_OK,data);
+//
                 galleryAddPic();
                 finish();
             }
@@ -73,14 +74,11 @@ public class TakePhoto extends AppCompatActivity {
         startCamera();
 
     }
-@Override
-public void onDestroy() {
 
-    super.onDestroy();
-
-
-}
-
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+    }
 
     public void startCamera() {
         try {

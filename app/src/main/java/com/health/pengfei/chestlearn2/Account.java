@@ -1,5 +1,7 @@
 package com.health.pengfei.chestlearn2;
 
+import android.util.Log;
+
 import java.io.Serializable;
 
 public class Account implements Serializable {
@@ -46,14 +48,16 @@ public class Account implements Serializable {
     }
 
     public void setFirstPic(boolean firstPic){
+        Log.d("MyApp","Reset First Pic");
         this.firstPic = firstPic;
     }
 
     public void setSecondPic(boolean secondPic){
-        this.secondPic = secondPic;
-    }
+        Log.d("MyApp","Reset Second Pic");
+        this.secondPic = secondPic; }
 
     public void setThirdPic(boolean thirdPic){
+        Log.d("MyApp","Reset Third Pic");
         this.thirdPic = thirdPic;
     }
 

@@ -3,6 +3,8 @@ package com.health.pengfei.chestlearn2;
 import java.util.ArrayList;
 import java.util.HashMap;
 import android.content.Context;
+import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -46,7 +48,7 @@ public class MyAdapter extends BaseAdapter {
     }
 
 
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         Row row = null;
         if(convertView==null){
             row = new Row();
@@ -63,16 +65,21 @@ public class MyAdapter extends BaseAdapter {
             row = (Row) convertView.getTag();
         }
         // binding data
+        final String patient_name = (String)data.get(position).get("name");
+
         row.imageView.setBackgroundResource((Integer) data.get(position).get("image"));
-        row.titleView.setText((String)data.get(position).get("name"));
-        row.infoView.setText("1st:" + String.valueOf(data.get(position).get("first picture")) + " " +
-                "2nd:" + String.valueOf(data.get(position).get("second picture")) + " " +
-                "3rd:" + String.valueOf(data.get(position).get("third picture")));
+        row.titleView.setText(patient_name);
+        row.infoView.setText("Xray:" + String.valueOf(data.get(position).get("first picture")) + " " +
+                "Add1:" + String.valueOf(data.get(position).get("second picture")) + " " +
+                "Add2:" + String.valueOf(data.get(position).get("third picture")));
         row.button.setOnClickListener(new OnClickListener(){
 
             public void onClick(View v) {
-                //TODO
-                // Start new activity for photo review and retake
+                String patient_name = (String)data.get(position).get("name");
+                Log.d("MyApp","button clicked:" + patient_name);
+                Intent i = new Intent(context,Late_info.class);
+                i.putExtra("patientlastname", patient_name);
+                context.startActivity(i);
             }
 
         });

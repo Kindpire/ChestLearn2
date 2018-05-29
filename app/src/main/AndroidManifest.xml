@@ -62,7 +62,11 @@
         <activity
             android:name=".AdditionalInfoActivity"
             android:label="@string/title_activity_additional_info"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Late_info"
+            android:label="@string/title_activity_late_info"
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>

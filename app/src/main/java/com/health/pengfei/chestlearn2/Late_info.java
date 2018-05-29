@@ -6,18 +6,18 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
-import android.os.Bundle;
 import android.provider.Settings;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.bumptech.glide.Glide;
 
 import java.io.File;
 import java.io.IOException;
@@ -31,162 +31,109 @@ import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-
 import android.provider.Settings.Secure;
-import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
-
-
-public class AdditionalInfoActivity extends AppCompatActivity {
-    public static final String EVALUATE_DIALOG = "evaluate_dialog";
-    public static final int REQUEST_EVALUATE = 0X110;
-    public static final String ARGUMENT = "argument";
-    public static final String RESPONSE = "response";
-
+public class Late_info extends AppCompatActivity {
     private SharedPreferences sp;
     private ProgressDialog progressDialog;
-    boolean check_two = false;
-//    private TextView textview_patient_last_name;
+    //    private TextView textview_patient_last_name;
     private String patientlastname;
-    private ImageView second_XRay_Image,third_XRay_Image;
-    private String main_XRay_Image_uri, second_XRay_Image_uri,third_XRay_Image_uri;
-    private Button second_XRay_button,third_XRay_button, submitButton;
-
+    private ImageView Img_Xray,Img_add1, Img_add2;
+    private String Uri_Xray, Uri_add1,Uri_add2;
+    private Button Btn_Xray,Btn_add1, Btn_add2, Btn_submit;
+    private boolean Status_First_Pic, Status_Second_Pic, Status_Third_Pic;
     Account patient = new Account("", false, false, false);
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_additional_info);
+        setContentView(R.layout.activity_resubmit_late_info);
 
-        second_XRay_Image=(ImageView) findViewById(R.id.nurse_imageTB2);
-        third_XRay_Image=(ImageView) findViewById(R.id.nurse_imageTB3);
+        //TODO change xml
+        Img_Xray =(ImageView) findViewById(R.id.nurse_imageXray);
+        Img_add1=(ImageView) findViewById(R.id.nurse_imageTB2);
+        Img_add2=(ImageView) findViewById(R.id.nurse_imageTB3);
+
+        Status_First_Pic = false;
+        Status_Second_Pic = false;
+        Status_Third_Pic = false;
 
         sp= getSharedPreferences("doctor.conf", Context.MODE_PRIVATE);
         progressDialog = new ProgressDialog(this);
 
-        second_XRay_button = (Button) findViewById(R.id.buttonTBPhoto2);
-        third_XRay_button = (Button) findViewById(R.id.buttonTBPhoto3);
-        submitButton = (Button) findViewById(R.id.button_Nurse_submit);
+        //TODO change xml
+        Btn_Xray = (Button) findViewById(R.id.buttonTBPhoto1);
+        Btn_add1 = (Button) findViewById(R.id.buttonTBPhoto2);
+        Btn_add2 = (Button) findViewById(R.id.buttonTBPhoto3);
+        Btn_submit = (Button) findViewById(R.id.button_Nurse_submit);
 
         TextView textview_patient_last_name = (TextView) findViewById(R.id.tv_patientlastname);
-
         Intent intent = getIntent();
-        String X_Img_url = intent.getStringExtra("x_img_uri");
+
         patientlastname = intent.getStringExtra("patientlastname");
-        main_XRay_Image_uri = X_Img_url;
+
+        ArrayList<Account> results = new ArrayList<Account>();
+        AccountRecord account = new AccountRecord();
+        try {
+            results = account.readFile();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        for (Account result:results) {
+            if(result.getPatientName().equals(patientlastname)) {
+                Log.d("MyApp","Patient exist!");
+                patient.setPatientName(patientlastname);
+                patient.setFirstPic(result.isFirstPic());
+                patient.setSecondPic(result.isSecondPic());
+                patient.setThirdPic(result.isThirdPic());
+            }
+        }
+//        Log.d("MyApp",String.valueOf(Status_First_Pic) + String.valueOf(Status_Second_Pic) + String.valueOf(Status_Third_Pic));
         String mainTppFileName = null;
-        patient = (Account)intent.getSerializableExtra("account");
+
         textview_patient_last_name.setText(patientlastname);
 
-        if (X_Img_url != null) {
-            Uri imageUri = Uri.parse(X_Img_url);
-            File file = new File(imageUri.getPath());
-            mainTppFileName = file.getName();
-        }
-
-        Log.e("HashMapTest", X_Img_url);
-        Log.e("HashMapTest", mainTppFileName);
-        String  clinicName= sp.getString("clinicName","");
-        String  nurseName=  sp.getString("nurseName","");
-        final String  recipients=sp.getString("recipients","");
-        String  doc1=sp.getString("doc1","");
-        String  doc2=sp.getString("doc2","");
-        String  doc3=sp.getString("doc3","");
-        String uploadDeviceID = Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
-
-        HashMap<String, RequestBody> map = new HashMap<String, RequestBody>();
-        map.put("id", toRequestBody("1"));
-        map.put("patientLastName", toRequestBody(patientlastname));
-        map.put("uploadDeviceID", toRequestBody(uploadDeviceID));
-        map.put("uploadPersonType", toRequestBody("n"));
-        map.put("uploadNurseName", toRequestBody(nurseName));
-        map.put("clinicName", toRequestBody(clinicName));
-        map.put("doc1", toRequestBody(doc1));
-        map.put("doc2", toRequestBody(doc2));
-        map.put("doc3", toRequestBody(doc3));
-        map.put("mainTppFileName", toRequestBody(mainTppFileName));
-
-        second_XRay_button.setOnClickListener(new View.OnClickListener() {
+        Btn_Xray.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(AdditionalInfoActivity.this, TakePhoto.class);
-
+                Intent i = new Intent(Late_info.this, TakePhoto.class);
                 startActivityForResult(i,2);
+                patient.setFirstPic(true);
+            }
+        });
+        Btn_add1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(Late_info.this, TakePhoto.class);
+                startActivityForResult(i,3);
                 patient.setSecondPic(true);
             }
         });
-        third_XRay_button.setOnClickListener(new View.OnClickListener() {
+        Btn_add2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(AdditionalInfoActivity.this, TakePhoto.class);
-
-                startActivityForResult(i,3);
+                Intent i = new Intent(Late_info.this, TakePhoto.class);
+                startActivityForResult(i,4);
                 patient.setThirdPic(true);
             }
         });
-        submitButton.setOnClickListener(new View.OnClickListener() {
+        Btn_submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(second_XRay_Image_uri==null && third_XRay_Image_uri==null){
+                if(Uri_Xray==null && Uri_add1==null && Uri_add2==null){
                     //open a dialog box to "yes" continue to send or "no" to cancel the submit request.
-                    AlertDialog.Builder builder=new AlertDialog.Builder(AdditionalInfoActivity.this);
-                    builder.setTitle(R.string.exam_lab_result_empty)
-                            .setMessage(R.string.upload_xray_img)
+                    AlertDialog.Builder builder=new AlertDialog.Builder(Late_info.this);
+                    builder.setTitle(R.string.nothing_to_upload)
+                            .setMessage(R.string.upload_nothing)
                             .setCancelable(false)
                             .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int which) {
-                                    uploadPics();
-                                }
-                            })
-                            .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    return;
-                                }
-                            })
-                            .show();
-                } else if(second_XRay_Image_uri==null && third_XRay_Image_uri!=null){
-                    //open a dialog box to "yes" continue to send or "no" to cancel the submit request.
-                    AlertDialog.Builder builder=new AlertDialog.Builder(AdditionalInfoActivity.this);
-                    builder.setTitle(R.string.exam_result_empty)
-                            .setCancelable(false)
-                            .setMessage(
-                                    R.string.upload_lab_xray_img)
-                            .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int which) {
-                                    uploadPics();
-                                }
-                            })
-                            .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    return;
-                                }
-                            })
-                            .show();
-                } else if (second_XRay_Image_uri!=null && third_XRay_Image_uri==null){
-                    //open a dialog box to "yes" continue to send or "no" to cancel the submit request.
-                    AlertDialog.Builder builder=new AlertDialog.Builder(AdditionalInfoActivity.this);
-
-                    builder.setTitle(
-                            R.string.lab_result_empty)
-                            .setMessage(R.string.upload_exam_xray_img)
-                            .setCancelable(false)
-                            .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int which) {
-                                    uploadPics();
-                                }
-                            })
-                            .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-                                @Override
                                 public void onClick(DialogInterface dialog, int which) {
                                     return;
                                 }
                             })
                             .show();
                 } else {
-                    AlertDialog.Builder builder=new AlertDialog.Builder(AdditionalInfoActivity.this);
+                    AlertDialog.Builder builder=new AlertDialog.Builder(Late_info.this);
                     builder.setTitle(R.string.Confirmation)
                             .setMessage(
                                     R.string.readtoproceed)
@@ -203,7 +150,6 @@ public class AdditionalInfoActivity extends AppCompatActivity {
                                 }
                             })
                             .show();
-
                 }
             }
         });
@@ -212,7 +158,6 @@ public class AdditionalInfoActivity extends AppCompatActivity {
         RequestBody body = RequestBody.create(MediaType.parse("text/plain"), value);
         return body;
     }
-
     public void uploadPics(){
         String  clinicName= sp.getString("clinicName","");
         String  nurseName=  sp.getString("nurseName","");
@@ -221,43 +166,41 @@ public class AdditionalInfoActivity extends AppCompatActivity {
         String  doc2=sp.getString("doc2","");
         String  doc3=sp.getString("doc3","");
         String patientLName= patientlastname;
-        String uploadDeviceID = Secure.getString(this.getContentResolver(),Secure.ANDROID_ID);
-
-        String mainTppFileName = null;
-        check_two = false;
+        String uploadDeviceID = Settings.Secure.getString(this.getContentResolver(), Settings.Secure.ANDROID_ID);
+        //TODO anybetter way to do it?
+        String mainTppFileName = "null";
 
         MultipartBody.Builder builder = new MultipartBody.Builder()
                 .setType(MultipartBody.FORM);
 
         System.out.println("Ready to upload");
 
-        if (main_XRay_Image_uri != null) {
-            Uri imageUri = Uri.parse(main_XRay_Image_uri);
+        if (Uri_Xray != null) {
+            Uri imageUri = Uri.parse(Uri_Xray);
             File file = new File(imageUri.getPath());
             mainTppFileName = file.getName();
             RequestBody uploadedfile = RequestBody.create(MediaType.parse("multipart/form-data"), file);
             builder.addFormDataPart("uploadedfile[]", file.getName(), uploadedfile);
+            Log.d("MyApp", "Uri_Xray: "+file.getName());
         }
 
-        if (second_XRay_Image_uri != null) {
-            Uri imageUri = Uri.parse(second_XRay_Image_uri);
+        if (Uri_add1 != null) {
+            Uri imageUri = Uri.parse(Uri_add1);
             File file = new File(imageUri.getPath());
             RequestBody uploadedfile = RequestBody.create(MediaType.parse("multipart/form-data"), file);
             builder.addFormDataPart("uploadedfile[]", file.getName(), uploadedfile);
-
+            Log.d("MyApp", "Uri_add1: "+file.getName());
         }
 
-        if (third_XRay_Image_uri != null) {
-            Uri imageUri = Uri.parse(third_XRay_Image_uri);
+        if (Uri_add2 != null) {
+            Uri imageUri = Uri.parse(Uri_add2);
             File file = new File(imageUri.getPath());
             RequestBody uploadedfile = RequestBody.create(MediaType.parse("multipart/form-data"), file);
             builder.addFormDataPart("uploadedfile[]", file.getName(), uploadedfile);
+            Log.d("MyApp", "Uri_add2: "+file.getName());
         }
 
-//        if (mainTppFileName == null) {
-//            Toast.makeText(this.getApplicationContext(), "Main X ray must be at first place", Toast.LENGTH_SHORT).show();
-//            return;
-//        }
+
         progressDialog.setMessage(this.getApplicationContext().getText(R.string.waitamoment));
         progressDialog.show();
 
@@ -283,7 +226,7 @@ public class AdditionalInfoActivity extends AppCompatActivity {
                 if (serverResponse != null) {
                     //error
                     if (serverResponse.getError()) {
-                        Toast.makeText(AdditionalInfoActivity.this.getApplicationContext(), serverResponse.getMessage(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(Late_info.this.getApplicationContext(), serverResponse.getMessage(), Toast.LENGTH_SHORT).show();
                     } else {
                         ArrayList<Account> results = new ArrayList<Account>();
                         AccountRecord account = new AccountRecord();
@@ -301,12 +244,14 @@ public class AdditionalInfoActivity extends AppCompatActivity {
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
-                        Toast.makeText(AdditionalInfoActivity.this.getApplicationContext(), serverResponse.getMessage(), Toast.LENGTH_SHORT).show();
-                        second_XRay_Image.setImageResource(R.drawable.image_border);
-                        second_XRay_Image_uri = null;
-                        third_XRay_Image.setImageResource(R.drawable.image_border);
-                        third_XRay_Image_uri = null;
-                        AlertDialog.Builder builder=new AlertDialog.Builder(AdditionalInfoActivity.this);
+                        Toast.makeText(Late_info.this.getApplicationContext(), serverResponse.getMessage(), Toast.LENGTH_SHORT).show();
+                        Img_Xray.setImageResource(R.drawable.image_border);
+                        Uri_Xray = null;
+                        Img_add1.setImageResource(R.drawable.image_border);
+                        Uri_add1 = null;
+                        Img_add2.setImageResource(R.drawable.image_border);
+                        Uri_add2 = null;
+                        AlertDialog.Builder builder=new AlertDialog.Builder(Late_info.this);
                         builder.setTitle(R.string.result)
                                 .setMessage(R.string.successfulupload)
                                 .setCancelable(false)
@@ -340,41 +285,34 @@ public class AdditionalInfoActivity extends AppCompatActivity {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         Log.d("MyApp", "onActivityResult: " + requestCode);
         Log.d("MyApp", "resultCode:  " + resultCode);
-//        if (requestCode == REQUEST_EVALUATE)
-//        {
-//            String evaluate = data.getStringExtra(NoticeDialogFragment.RESPONSE_EVALUATE);
-//            System.out.println(evaluate);
-//            if (evaluate == "YES"){
-//                System.out.println("Yes, upload.");
-//                uploadPics();
-//            }else if (evaluate == "CANCEL"){
-//                System.out.println("Give up.");
-//            }
-//            Toast.makeText(this, evaluate, Toast.LENGTH_SHORT).show();
-//            Intent intent = new Intent();
-//            intent.putExtra(RESPONSE, evaluate);
-//            this.setResult(AdditionalInfoActivity.RESULT_OK, intent);
-//        }
         if(resultCode != RESULT_CANCELED) {
             if (requestCode == 2) {
-                System.out.println("From second" + data.getStringExtra("uri"));
+                Log.d("MyApp", "From Xray" + data.getStringExtra("uri"));
                 String mCurrentPhotoPath=data.getStringExtra("uri");
                 if(mCurrentPhotoPath!=null) {
-                    second_XRay_Image_uri = mCurrentPhotoPath;
+                    Uri_Xray = mCurrentPhotoPath;
                     Uri imageUri = Uri.parse(mCurrentPhotoPath);
                     File file = new File(imageUri.getPath());
-                    Glide.with(this).load(new File(imageUri.getPath())).into(second_XRay_Image);
-
+                    Glide.with(this).load(new File(imageUri.getPath())).into(Img_Xray);
                 }
             } else if (requestCode == 3) {
                 System.out.println("From third" + data.getStringExtra("uri"));
                 String mCurrentPhotoPath=data.getStringExtra("uri");
                 if(mCurrentPhotoPath!=null) {
                     Uri imageUri = Uri.parse(mCurrentPhotoPath);
-                    third_XRay_Image_uri = mCurrentPhotoPath;
+                    Uri_add1 = mCurrentPhotoPath;
                     File file = new File(imageUri.getPath());
-                    Glide.with(this).load(new File(imageUri.getPath())).into(third_XRay_Image);
+                    Glide.with(this).load(new File(imageUri.getPath())).into(Img_add1);
 
+                }
+            } else if (requestCode == 4) {
+                System.out.println("From third" + data.getStringExtra("uri"));
+                String mCurrentPhotoPath=data.getStringExtra("uri");
+                if(mCurrentPhotoPath!=null) {
+                    Uri imageUri = Uri.parse(mCurrentPhotoPath);
+                    Uri_add2 = mCurrentPhotoPath;
+                    File file = new File(imageUri.getPath());
+                    Glide.with(this).load(new File(imageUri.getPath())).into(Img_add2);
                 }
             }
         }
