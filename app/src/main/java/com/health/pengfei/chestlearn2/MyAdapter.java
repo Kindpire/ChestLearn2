@@ -2,6 +2,8 @@ package com.health.pengfei.chestlearn2;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
@@ -80,6 +82,11 @@ public class MyAdapter extends BaseAdapter {
                 Intent i = new Intent(context,Late_info.class);
                 i.putExtra("patientlastname", patient_name);
                 context.startActivity(i);
+                if(History.class.isInstance(context))
+                {
+                    Activity activity = (Activity)context;
+                    activity.finish();
+                }
             }
 
         });
