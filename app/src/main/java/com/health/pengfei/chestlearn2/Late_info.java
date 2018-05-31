@@ -273,6 +273,7 @@ public class Late_info extends AppCompatActivity {
                                         resultIntent.putExtra("additionalinfo", "success");
                                         setResult(9, resultIntent);
                                         finish();
+                                        startActivity(new Intent(Late_info.this, History.class));
                                     }
                                 })
                                 .show();
