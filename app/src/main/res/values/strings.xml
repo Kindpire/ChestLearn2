@@ -123,4 +123,7 @@
     <string name="healthcare_pro_name">Healthcare Professional Name</string>
     <!--Nurse Email-->
     <string name="nurse_email">Nurse Email</string>
+    <string name="submitquestion">Is patient under treatment?</string>
+    <string name="submitquestion2">If Yes: Indicate month of treatment:</string>
+    <string name="submitquestion2hint">Type number of months here</string>
 </resources>

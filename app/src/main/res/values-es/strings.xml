@@ -122,4 +122,7 @@
     <string name="healthcare_pro_name">Nombre profesional de la salud</string>
     <!--Nurse Email-->
     <string name="nurse_email">Correo electrónico de la enfermera</string>
+    <string name="submitquestion">Está el paciente bajo tratamiento?</string>
+    <string name="submitquestion2">Si es así: indique el mes de tratamiento:</string>
+    <string name="submitquestion2hint">Escriba el número de meses aquí</string>
 </resources>

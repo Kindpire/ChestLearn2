@@ -20,6 +20,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
@@ -65,7 +67,7 @@ public class Radiologist_fragment extends Fragment {
     private EditText radio_note_textField,patientLastName;
 
     private SharedPreferences sp;
-
+    private SharedPreferences.Editor sp_editor;
     private ProgressDialog progressDialog;
 
 
@@ -111,6 +113,8 @@ public class Radiologist_fragment extends Fragment {
         View radioFragmentView = inflater.inflate(R.layout.radiologist_fragment, container, false);
         progressDialog = new ProgressDialog(radioFragmentView.getContext());
         sp= getActivity().getSharedPreferences("doctor.conf", Context.MODE_PRIVATE);
+        sp_editor=sp.edit();
+
         radio_image_view=(ImageView)radioFragmentView.findViewById(R.id.radio_image);
         radio_take_image_button=(Button)radioFragmentView.findViewById(R.id.radioTakePhoto);
         radio_take_image_button.setOnClickListener(new View.OnClickListener() {
@@ -128,96 +132,142 @@ public class Radiologist_fragment extends Fragment {
             @Override
             public void onClick(View v) {
 
+                AlertDialog.Builder builder2=new AlertDialog.Builder(getActivity());
+                LayoutInflater inflater2 = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);;
+                final View dialog_treatment = inflater2.inflate(R.layout.dialog_treatment, null, false);
 
-                String  clinicName= sp.getString("clinicName","");
-                String  nurseName=  sp.getString("nurseName","");
-                String  recipients=sp.getString("recipients","");
-                String  doc1=sp.getString("doc1","");
-                String  doc2=sp.getString("doc2","");
-                String  doc3=sp.getString("doc3","");
-                String patientLName=patientLastName.getText().toString();
-                String uploadDeviceID = Settings.Secure.getString(getContext().getContentResolver(), Settings.Secure.ANDROID_ID);
+                final RadioGroup msg_RadioGroup = (RadioGroup) dialog_treatment
+                        .findViewById(R.id.treatmentRadioButton);
+                msg_RadioGroup.check(R.id.NoRadioButton);
 
-                String mainTppFileName = null;
+                final EditText msg_EditText = (EditText) dialog_treatment
+                        .findViewById(R.id.months_EditText);
+                msg_EditText.setText("0");
+                builder2.setView(dialog_treatment)
+                        .setTitle("Treatment")
+                        .setCancelable(false)
+                        .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                /*
+                                 * Getting the value of selected RadioButton.
+                                 */
+                                // get selected radio button from radioGroup
+                                int selectedId = msg_RadioGroup
+                                        .getCheckedRadioButtonId();
 
+                                // find the radiobutton by returned id
+                                RadioButton selectedRadioButton = (RadioButton) dialog_treatment
+                                        .findViewById(selectedId);
 
-                MultipartBody.Builder builder = new MultipartBody.Builder()
-                        .setType(MultipartBody.FORM);
+                                sp_editor.putString("undertreatment",selectedRadioButton.getText().toString());
+                                sp_editor.putString("treatment_duration",msg_EditText.getText().toString());
+                                sp_editor.apply();
 
-                if(radio_image_uri!=null) {
-                    Uri imageUri = Uri.parse(radio_image_uri);
-                    File file = new File(imageUri.getPath());
-                    mainTppFileName = file.getName();
-                    RequestBody uploadedfile = RequestBody.create(MediaType.parse("multipart/form-data"), file);
-                    builder.addFormDataPart("uploadedfile[]", file.getName(), uploadedfile);
+                                String  clinicName= sp.getString("clinicName","");
+                                String  nurseName=  sp.getString("nurseName","");
+                                String  doc1=sp.getString("doc1","");
+                                String  doc2=sp.getString("doc2","");
+                                String  doc3=sp.getString("doc3","");
+                                String  doc4=sp.getString("doc4","");
+                                String patientLName=patientLastName.getText().toString();
+                                String uploadDeviceID = Settings.Secure.getString(getContext().getContentResolver(), Settings.Secure.ANDROID_ID);
+                                String undertreatment = sp.getString("undertreatment","");
+                                String treatment_duration = sp.getString("treatment_duration","");
+                                String mainTppFileName = null;
 
-                }
-                if (mainTppFileName == null) {
-//                    Toast.makeText(getActivity().getApplicationContext(), "Main X ray must be at first place", Toast.LENGTH_SHORT).show();
-                    //TODO open a dialog box to "yes" continue to send or "no" to cancel the submit request.
-                    AlertDialog.Builder alertbuilder=new AlertDialog.Builder(getActivity());
-                    alertbuilder.setTitle(R.string.noxrayimg)
-                            .setMessage(R.string.plztakexrayimgfirst)
-                            .setCancelable(false)
-                            .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int which) {
+                                MultipartBody.Builder builder = new MultipartBody.Builder()
+                                        .setType(MultipartBody.FORM);
+
+                                if(radio_image_uri!=null) {
+                                    Uri imageUri = Uri.parse(radio_image_uri);
+                                    File file = new File(imageUri.getPath());
+                                    mainTppFileName = file.getName();
+                                    RequestBody uploadedfile = RequestBody.create(MediaType.parse("multipart/form-data"), file);
+                                    builder.addFormDataPart("uploadedfile[]", file.getName(), uploadedfile);
+
                                 }
-                            })
-                            .show();
-                    return;
-                }
-                progressDialog.setMessage(getActivity().getApplicationContext().getText(R.string.waitamoment));
-                progressDialog.show();
-                HashMap<String, RequestBody> map = new HashMap<String, RequestBody>();
-                map.put("id",toRequestBody("1"));
-                map.put("patientLastName",toRequestBody(patientLName));
-                map.put("uploadDeviceID",toRequestBody(uploadDeviceID));
-                map.put("uploadPersonType",toRequestBody("r"));
-                map.put("uploadNurseName",toRequestBody(nurseName));
-                map.put("clinicName",toRequestBody(clinicName));
-                //map.put("recipientName",toRequestBody(recipients));
-                map.put("doc1",toRequestBody(doc1));
-                map.put("doc2",toRequestBody(doc2));
-                map.put("doc3",toRequestBody(doc3));
-                map.put("mainTppFileName",toRequestBody(mainTppFileName));
-                map.put("doctorNotes",toRequestBody(radio_note_textField.getText().toString()));
-                List<MultipartBody.Part> parts = builder.build().parts();
-                ApiUtil.uploadFile(parts,map).enqueue(new Callback<ServerResponse>() {
-                    @Override
-                    public void onResponse(Call<ServerResponse> call, Response<ServerResponse> response) {
-                        ServerResponse serverResponse = response.body();
-                        if (serverResponse != null) {
-                            if (serverResponse.getError()) {
-                                Toast.makeText(getActivity().getApplicationContext(), serverResponse.getMessage(), Toast.LENGTH_SHORT).show();
-                            }else {
-                                AlertDialog.Builder builder=new AlertDialog.Builder(getActivity());
-                                builder.setTitle(R.string.result)
-                                        .setMessage(R.string.successfulupload)
-                                        .setCancelable(false)
-                                        .setPositiveButton(R.string.done, new DialogInterface.OnClickListener() {
-                                            public void onClick(DialogInterface dialog, int which) {
+                                if (mainTppFileName == null) {
+                                    //TODO open a dialog box to "yes" continue to send or "no" to cancel the submit request.
+                                    AlertDialog.Builder alertbuilder=new AlertDialog.Builder(getActivity());
+                                    alertbuilder.setTitle(R.string.noxrayimg)
+                                            .setMessage(R.string.plztakexrayimgfirst)
+                                            .setCancelable(false)
+                                            .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                                                public void onClick(DialogInterface dialog, int which) {
+                                                }
+                                            })
+                                            .show();
+                                    return;
+                                }
+
+
+
+                                progressDialog.setMessage(getActivity().getApplicationContext().getText(R.string.waitamoment));
+                                progressDialog.show();
+                                HashMap<String, RequestBody> map = new HashMap<String, RequestBody>();
+                                map.put("id",toRequestBody("1"));
+                                map.put("patientLastName",toRequestBody(patientLName));
+                                map.put("uploadDeviceID",toRequestBody(uploadDeviceID));
+                                map.put("uploadPersonType",toRequestBody("r"));
+                                map.put("uploadNurseName",toRequestBody(nurseName));
+                                map.put("clinicName",toRequestBody(clinicName));
+
+                                map.put("doc1",toRequestBody(doc1));
+                                map.put("doc2",toRequestBody(doc2));
+                                map.put("doc3",toRequestBody(doc3));
+                                map.put("doc4",toRequestBody(doc4));
+                                map.put("mainTppFileName",toRequestBody(mainTppFileName));
+                                map.put("doctorNotes",toRequestBody(radio_note_textField.getText().toString()));
+                                map.put("undertreatment", toRequestBody(undertreatment));
+                                map.put("treatment_duration",toRequestBody(treatment_duration));
+                                List<MultipartBody.Part> parts = builder.build().parts();
+                                ApiUtil.uploadFile(parts,map).enqueue(new Callback<ServerResponse>() {
+                                    @Override
+                                    public void onResponse(Call<ServerResponse> call, Response<ServerResponse> response) {
+                                        ServerResponse serverResponse = response.body();
+                                        if (serverResponse != null) {
+                                            if (serverResponse.getError()) {
+                                                Toast.makeText(getActivity().getApplicationContext(), serverResponse.getMessage(), Toast.LENGTH_SHORT).show();
+                                            }else {
+                                                AlertDialog.Builder builder=new AlertDialog.Builder(getActivity());
+                                                builder.setTitle(R.string.result)
+                                                        .setMessage(R.string.successfulupload)
+                                                        .setCancelable(false)
+                                                        .setPositiveButton(R.string.done, new DialogInterface.OnClickListener() {
+                                                            public void onClick(DialogInterface dialog, int which) {
+                                                            }
+                                                        })
+                                                        .show();
+                                                radio_image_view.setImageResource(R.drawable.image_border);
+                                                radio_note_textField.setText(" ");
+                                                patientLastName.setText("");
+                                                Toast.makeText(getActivity().getApplicationContext(), serverResponse.getMessage(), Toast.LENGTH_SHORT).show();
                                             }
-                                        })
-                                        .show();
-                                radio_image_view.setImageResource(R.drawable.image_border);
-                                radio_note_textField.setText(" ");
-                                patientLastName.setText("");
-                                Toast.makeText(getActivity().getApplicationContext(), serverResponse.getMessage(), Toast.LENGTH_SHORT).show();
+
+                                        }else {
+                                            assert  serverResponse != null;
+                                            Log.v("Response", serverResponse.toString());
+                                        }
+                                        progressDialog.dismiss();
+
+                                    }
+
+                                    @Override
+                                    public void onFailure(Call<ServerResponse> call, Throwable t) {
+                                        Log.v("OnFailure", t.toString());
+                                    }
+                                });
                             }
 
-                        }else {
-                            assert  serverResponse != null;
-                            Log.v("Response", serverResponse.toString());
-                        }
-                        progressDialog.dismiss();
-
-                    }
-
+                        }).setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
                     @Override
-                    public void onFailure(Call<ServerResponse> call, Throwable t) {
-                        Log.v("OnFailure", t.toString());
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
                     }
-                });
+                }).show();
+
+
+
             }
         });
         return radioFragmentView;
@@ -236,8 +286,6 @@ public class Radiologist_fragment extends Fragment {
                     radio_image_uri = mCurrentPhotoPath;
                     Uri imageUri = Uri.parse(mCurrentPhotoPath);
                     File file = new File(imageUri.getPath());
-
-
                     Glide.with(this).load(new File(imageUri.getPath())).into(radio_image_view);
 
                 }

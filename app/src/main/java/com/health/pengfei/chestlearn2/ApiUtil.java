@@ -42,7 +42,6 @@ public class ApiUtil {
                     .addConverterFactory(GsonConverterFactory.create(gson))
                     .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                     .build();
-
         }
         return retrofit;
     }

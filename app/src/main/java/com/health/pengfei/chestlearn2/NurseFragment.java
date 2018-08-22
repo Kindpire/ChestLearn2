@@ -1,6 +1,5 @@
 package com.health.pengfei.chestlearn2;
 
-import android.Manifest;
 import android.app.Activity;
 //import android.app.Fragment;
 import android.app.ProgressDialog;
@@ -8,12 +7,9 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 //v4 and app's Fragment are different, v4 support 1.6 minimum, app for 3.0
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 
 import android.support.v7.app.AlertDialog;
@@ -35,6 +31,8 @@ import java.util.HashMap;
 import java.util.List;
 
 import android.provider.Settings.Secure;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -48,7 +46,6 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 import static android.app.Activity.RESULT_CANCELED;
-import static android.content.ContentValues.TAG;
 
 
 /**
@@ -64,9 +61,7 @@ public class NurseFragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-    public static final String ARGUMENT = "argument";
     public static final String RESPONSE = "response";
-    public static final String EVALUATE_DIALOG = "evaluate_dialog";
     public static final int REQUEST_EVALUATE = 0X110;
 
     // TODO: Rename and change types of parameters
@@ -74,13 +69,12 @@ public class NurseFragment extends Fragment {
     private String mParam2;
     private ImageView main_XRay_Image;
     private String main_XRay_Image_uri;
-    boolean checkallthree;
+    boolean check_all_three;
     private Button main_XRay_button, submitButton, edit_Button, additional_Button;
     private EditText patientLastName;
-    private EditText patient_LastName_textEdit;
 
     private SharedPreferences sp;
-
+    private SharedPreferences.Editor sp_editor;
     private ProgressDialog progressDialog;
 
     private OnFragmentInteractionListener mListener;
@@ -123,15 +117,13 @@ public class NurseFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
-
-
         // Inflate the layout for this fragment
         View nurseFragmentView = inflater.inflate(R.layout.nurse_fargment, container, false);
         patientLastName=(EditText)nurseFragmentView.findViewById(R.id.patientLastName);
         main_XRay_Image=(ImageView) nurseFragmentView.findViewById(R.id.nurse_imageTB);
 
         sp= getActivity().getSharedPreferences("doctor.conf", Context.MODE_PRIVATE);
+        sp_editor=sp.edit();
         progressDialog = new ProgressDialog(nurseFragmentView.getContext());
 
         main_XRay_button=(Button) nurseFragmentView.findViewById(R.id.buttonTBPhoto);
@@ -187,21 +179,22 @@ public class NurseFragment extends Fragment {
                 }
             }
         });
+
         additional_Button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 String  clinicName= sp.getString("clinicName","");
                 String  nurseName=  sp.getString("nurseName","");
                 final String  recipients=sp.getString("recipients","");
                 String  doc1=sp.getString("doc1","");
                 String  doc2=sp.getString("doc2","");
                 String  doc3=sp.getString("doc3","");
+                String  doc4=sp.getString("doc4","");
                 String patientLName=patientLastName.getText().toString();
                 String uploadDeviceID = Secure.getString(getContext().getContentResolver(),Secure.ANDROID_ID);
 
                 String mainTppFileName = null;
-                checkallthree = false;
+                check_all_three = false;
 
                 MultipartBody.Builder builder = new MultipartBody.Builder()
                         .setType(MultipartBody.FORM);
@@ -214,8 +207,6 @@ public class NurseFragment extends Fragment {
                 }
 
                 if (mainTppFileName == null) {
-//                    Toast.makeText(getActivity().getApplicationContext(), "Main X ray must be at first place", Toast.LENGTH_SHORT).show();
-                    //TODO open a dialog box to "yes" continue to send or "no" to cancel the submit request.
                     AlertDialog.Builder alertbuilder=new AlertDialog.Builder(getActivity());
                     alertbuilder.setTitle(R.string.noxrayimg)
                             .setMessage(R.string.plztakexrayimgfirst)
@@ -257,6 +248,7 @@ public class NurseFragment extends Fragment {
                 map.put("doc1", toRequestBody(doc1));
                 map.put("doc2", toRequestBody(doc2));
                 map.put("doc3", toRequestBody(doc3));
+                map.put("doc4", toRequestBody(doc4));
                 map.put("mainTppFileName", toRequestBody(mainTppFileName));
 
                 Intent i = new Intent(getActivity(),AdditionalInfoActivity.class);
@@ -266,6 +258,11 @@ public class NurseFragment extends Fragment {
                 startActivityForResult(i,9);
             }
         });
+
+
+
+
+
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -275,13 +272,47 @@ public class NurseFragment extends Fragment {
                         .setCancelable(false)
                         .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
-                                uploadPics();
+                                AlertDialog.Builder builder2=new AlertDialog.Builder(getActivity());
+                                LayoutInflater inflater2 = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);;
+                                final View dialog_treatment = inflater2.inflate(R.layout.dialog_treatment, null, false);
+
+                                final RadioGroup msg_RadioGroup = (RadioGroup) dialog_treatment
+                                        .findViewById(R.id.treatmentRadioButton);
+                                msg_RadioGroup.check(R.id.NoRadioButton);
+
+                                final EditText msg_EditText = (EditText) dialog_treatment
+                                        .findViewById(R.id.months_EditText);
+                                msg_EditText.setText("0");
+                                builder2.setView(dialog_treatment)
+                                        .setTitle("Treatment")
+                                        .setCancelable(false)
+                                        .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface dialog, int id) {
+                                                int selectedId = msg_RadioGroup
+                                                        .getCheckedRadioButtonId();
+                                                RadioButton selectedRadioButton = (RadioButton) dialog_treatment
+                                                        .findViewById(selectedId);
+
+                                                sp_editor.putString("undertreatment",selectedRadioButton.getText().toString());
+                                                sp_editor.putString("treatment_duration",msg_EditText.getText().toString());
+                                                sp_editor.apply();
+
+//                                                Toast.makeText(getActivity().getApplicationContext(), msg_EditText.getText().toString(), Toast.LENGTH_SHORT).show();
+                                                uploadPics();
+                                            }
+
+                                        }).setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int id) {
+                                            dialog.cancel();
+                                        }
+                                    }).show();
                             }
                         })
                         .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                return;
+                                dialog.cancel();
                             }
                         })
                         .show();
@@ -293,15 +324,16 @@ public class NurseFragment extends Fragment {
     public void uploadPics(){
         String  clinicName= sp.getString("clinicName","");
         String  nurseName=  sp.getString("nurseName","");
-        final String  recipients=sp.getString("recipients","");
         String  doc1=sp.getString("doc1","");
         String  doc2=sp.getString("doc2","");
         String  doc3=sp.getString("doc3","");
+        String  doc4=sp.getString("doc4","");
         String patientLName=patientLastName.getText().toString();
         String uploadDeviceID = Secure.getString(getContext().getContentResolver(),Secure.ANDROID_ID);
-
+        String undertreatment = sp.getString("undertreatment","");
+        String treatment_duration = sp.getString("treatment_duration","");
         String mainTppFileName = null;
-        checkallthree = false;
+        check_all_three = false;
 
         MultipartBody.Builder builder = new MultipartBody.Builder()
                 .setType(MultipartBody.FORM);
@@ -355,12 +387,14 @@ public class NurseFragment extends Fragment {
         map.put("uploadPersonType", toRequestBody("n"));
         map.put("uploadNurseName", toRequestBody(nurseName));
         map.put("clinicName", toRequestBody(clinicName));
-        // map.put("recipientName",toRequestBody(recipients));
         map.put("doc1", toRequestBody(doc1));
         map.put("doc2", toRequestBody(doc2));
         map.put("doc3", toRequestBody(doc3));
+        map.put("doc4", toRequestBody(doc4));
         map.put("mainTppFileName", toRequestBody(mainTppFileName));
-
+        map.put("undertreatment", toRequestBody(undertreatment));
+        map.put("treatment_duration",toRequestBody(treatment_duration));
+        Toast.makeText(getActivity(), undertreatment, Toast.LENGTH_SHORT).show();
         List<MultipartBody.Part> parts = builder.build().parts();
 
         ApiUtil.uploadFile(parts, map).enqueue(new Callback<ServerResponse>() {
@@ -370,6 +404,7 @@ public class NurseFragment extends Fragment {
                 if (serverResponse != null) {
                     //error
                     if (serverResponse.getError()) {
+                        Toast.makeText(getActivity().getApplicationContext(), "This is server error msg", Toast.LENGTH_SHORT).show();
                         Toast.makeText(getActivity().getApplicationContext(), serverResponse.getMessage(), Toast.LENGTH_SHORT).show();
                     } else {
                         //TODO: read record file, check if current account is in file, update account records, save to record file
@@ -390,7 +425,6 @@ public class NurseFragment extends Fragment {
                             e.printStackTrace();
                         }
 
-//                        Toast.makeText(getActivity().getApplicationContext(), serverResponse.getMessage(), Toast.LENGTH_SHORT).show();
                         AlertDialog.Builder builder=new AlertDialog.Builder(getActivity());
                         builder.setTitle(R.string.result)
                                 .setMessage(R.string.successfulupload)
@@ -419,12 +453,6 @@ public class NurseFragment extends Fragment {
                 Log.v("OnFailure", t.toString());
             }
         });
-    }
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
     }
 
     @Override
@@ -457,7 +485,6 @@ public class NurseFragment extends Fragment {
             }else if (evaluate == "CANCEL"){
                 System.out.println("Give up.");
             }
-            Toast.makeText(getActivity(), evaluate, Toast.LENGTH_SHORT).show();
             Intent intent = new Intent();
             intent.putExtra(RESPONSE, evaluate);
             getActivity().setResult(Activity.RESULT_OK, intent);

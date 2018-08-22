@@ -165,6 +165,7 @@ public class Late_info extends AppCompatActivity {
         String  doc1=sp.getString("doc1","");
         String  doc2=sp.getString("doc2","");
         String  doc3=sp.getString("doc3","");
+        String  doc4=sp.getString("doc4","");
         String patientLName= patientlastname;
         String uploadDeviceID = Settings.Secure.getString(this.getContentResolver(), Settings.Secure.ANDROID_ID);
         //TODO anybetter way to do it?
@@ -219,6 +220,7 @@ public class Late_info extends AppCompatActivity {
         map.put("doc1", toRequestBody(doc1));
         map.put("doc2", toRequestBody(doc2));
         map.put("doc3", toRequestBody(doc3));
+        map.put("doc4", toRequestBody(doc4));
         if(mainTppFileName!=null){
             map.put("mainTppFileName", toRequestBody(mainTppFileName));
         }
