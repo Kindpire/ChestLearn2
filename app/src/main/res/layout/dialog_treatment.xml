@@ -1,0 +1,59 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
+
+    <TextView
+        android:id="@+id/textView_treatment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:text="@string/submitquestion" />
+
+
+    <RadioGroup
+        android:id="@+id/treatmentRadioButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView_treatment" >
+
+        <RadioButton
+            android:id="@+id/YesRadioButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:text="@string/yes" />
+
+
+        <RadioButton
+            android:id="@+id/NoRadioButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/maleRadioButton"
+            android:text="@string/no" />
+
+    </RadioGroup>
+
+    <TextView
+        android:id="@+id/textView_treatment2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/treatmentRadioButton"
+        android:text="@string/submitquestion2" />
+
+    <EditText
+        android:id="@+id/months_EditText"
+        android:layout_width="252dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/textView_treatment2"
+        android:ems="10"
+        android:inputType="phone"
+        android:hint="@string/submitquestion2hint">
+
+        <requestFocus />
+    </EditText>
+
+</RelativeLayout>
