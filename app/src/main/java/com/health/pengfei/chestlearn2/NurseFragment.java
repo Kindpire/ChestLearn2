@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 //v4 and app's Fragment are different, v4 support 1.6 minimum, app for 3.0
@@ -25,6 +26,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -46,7 +48,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 import static android.app.Activity.RESULT_CANCELED;
-
+import android.provider.MediaStore;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -63,6 +65,7 @@ public class NurseFragment extends Fragment {
     private static final String ARG_PARAM2 = "param2";
     public static final String RESPONSE = "response";
     public static final int REQUEST_EVALUATE = 0X110;
+    private static final int REQUEST_CODE_PICK_IMAGE=3;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -70,7 +73,7 @@ public class NurseFragment extends Fragment {
     private ImageView main_XRay_Image;
     private String main_XRay_Image_uri;
     boolean check_all_three;
-    private Button main_XRay_button, submitButton, edit_Button, additional_Button;
+    private Button main_XRay_button, gallery_button, submitButton, edit_Button, additional_Button;
     private EditText patientLastName;
 
     private SharedPreferences sp;
@@ -127,6 +130,7 @@ public class NurseFragment extends Fragment {
         progressDialog = new ProgressDialog(nurseFragmentView.getContext());
 
         main_XRay_button=(Button) nurseFragmentView.findViewById(R.id.buttonTBPhoto);
+        gallery_button=(Button) nurseFragmentView.findViewById(R.id.buttonTBGallery);
         submitButton =(Button) nurseFragmentView.findViewById(R.id.button_Nurse_submit);
         additional_Button =(Button) nurseFragmentView.findViewById(R.id.button_additional_info);
         edit_Button=(Button)nurseFragmentView.findViewById(R.id.button_edit);
@@ -136,8 +140,14 @@ public class NurseFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(getActivity(),TakePhoto.class);
-
                 startActivityForResult(i,1);
+                patient.setFirstPic(true);
+            }
+        });
+        gallery_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                choosePhoto();
                 patient.setFirstPic(true);
             }
         });
@@ -152,7 +162,6 @@ public class NurseFragment extends Fragment {
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if ( (actionId == EditorInfo.IME_ACTION_DONE) || ((event.getKeyCode() == KeyEvent.KEYCODE_ENTER) && (event.getAction() == KeyEvent.ACTION_DOWN ))){
                     AlertDialog.Builder builder=new AlertDialog.Builder(getContext());
-
                     builder.setTitle("")
                             .setMessage(R.string.is_patient_last_name_correct)
                             .setCancelable(false)
@@ -319,6 +328,15 @@ public class NurseFragment extends Fragment {
             }
         });
         return nurseFragmentView;
+    }
+
+    public void choosePhoto(){
+        /**
+         * 打开选择图片的界面
+         */
+        Intent intent = new Intent(Intent.ACTION_PICK);
+        intent.setType("image/*");//相片类型
+        startActivityForResult(intent, REQUEST_CODE_PICK_IMAGE);
     }
 
     public void uploadPics(){
@@ -492,14 +510,30 @@ public class NurseFragment extends Fragment {
         if(resultCode != RESULT_CANCELED) {
             if (requestCode == 1) {
                 // make use of "data" = profit
-                System.out.println("From main" + data.getStringExtra("uri"));
+                System.out.println("From NurseFragment Image Uri: " + data.getStringExtra("uri"));
                 String mCurrentPhotoPath=data.getStringExtra("uri");
                 if(mCurrentPhotoPath!=null) {
                     main_XRay_Image_uri = mCurrentPhotoPath;
                     Uri imageUri = Uri.parse(mCurrentPhotoPath);
                     File file = new File(imageUri.getPath());
                     Glide.with(this).load(new File(imageUri.getPath())).into(main_XRay_Image);
+                    try {
+                        MediaStore.Images.Media.insertImage(getContext().getContentResolver(), imageUri.getPath(), file.getName(),"");
+                    } catch (FileNotFoundException e) {
+                        e.printStackTrace();
+                    }
+                    getContext().sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, imageUri));
 
+                }
+            }
+            if (requestCode == REQUEST_CODE_PICK_IMAGE) {
+                String mCurrentPhotoPath=getRealPathFromUri(getContext(), data.getData());
+                System.out.println("From NurseFragment Gallery Image Uri: " + mCurrentPhotoPath);
+                if(mCurrentPhotoPath!=null) {
+                    main_XRay_Image_uri = mCurrentPhotoPath;
+                    Uri imageUri = Uri.parse(mCurrentPhotoPath);
+                    File file = new File(imageUri.getPath());
+                    Glide.with(this).load(new File(imageUri.getPath())).into(main_XRay_Image);
                 }
             }
             if (requestCode == 9) {
@@ -510,7 +544,21 @@ public class NurseFragment extends Fragment {
                 patientLastName.setText("");
                 patientLastName.setEnabled(true);
             }
+        }
 
+    }
+    public static String getRealPathFromUri(Context context, Uri contentUri) {
+        Cursor cursor = null;
+        try {
+            String[] proj = {MediaStore.Images.Media.DATA};
+            cursor = context.getContentResolver().query(contentUri, proj, null, null, null);
+            int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+            cursor.moveToFirst();
+            return cursor.getString(column_index);
+        } finally {
+            if (cursor != null) {
+                cursor.close();
+            }
         }
     }
     public RequestBody toRequestBody(String value) {
